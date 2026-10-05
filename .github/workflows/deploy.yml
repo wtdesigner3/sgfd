@@ -35,4 +35,9 @@ jobs:
             **/testpng/**
             **/uploads12/**
             **/uploads/bakupimage/**
+            **/mail/uploads/badges/**
+            **/mail/uploads/qrcodes/**
+            **/*.zip
+            **/*.rar
+            **/*.tar.gz
             README.md

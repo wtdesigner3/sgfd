@@ -15,6 +15,11 @@ scratch/
 testpng/
 uploads12/
 uploads/bakupimage/
+mail/uploads/badges/
+mail/uploads/qrcodes/
+*.zip
+*.rar
+*.tar.gz
 
 # Deployment sync artifacts
 .ftp-deploy-sync-state.json
