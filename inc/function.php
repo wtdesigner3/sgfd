@@ -14,9 +14,9 @@ if (file_exists(__DIR__ . '/config.local.php')) {
     @define('SITE_URL', 'http://localhost/sgfoodees/');
 } elseif (strpos($serverHost, 'seotycoons.in') !== false) {
     $hostname = getenv('DB_HOST') ?: "localhost";
-    $dbusername = getenv('DB_USER') ?: "seotycoons_dbuser";
-    $dbpassword = getenv('DB_PASS') ?: "";
-    $dbname = getenv('DB_NAME') ?: "seotycoons_sgdev";
+    $dbusername = getenv('DB_USER') ?: "seotycoo_sgfduser";
+    $dbpassword = getenv('DB_PASS') ?: "Nk8suGDVsmJU";
+    $dbname = getenv('DB_NAME') ?: "seotycoo_sgfd";
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
     @define('SITE_NAME', 'sgfoodees Dev');
     @define('SITE_EMAIL', 'foodees.drgupta@gmail.com');
