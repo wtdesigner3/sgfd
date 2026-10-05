@@ -11,33 +11,41 @@ jobs:
   web-deploy:
     name: 🚀 Deploy to Test Server (seotycoons.in/sgdev)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: 🚚 Checkout Code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
 
-      - name: 📂 Sync files via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR || '/' }}
-          protocol: ftp
-          port: 21
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/scratch/**
-            **/testpng/**
-            **/uploads12/**
-            **/uploads/bakupimage/**
-            **/mail/uploads/badges/**
-            **/mail/uploads/qrcodes/**
-            **/*.zip
-            **/*.rar
-            **/*.tar.gz
-            README.md
+      - name: 🛠️ Install LFTP
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: 🚀 Sync files via LFTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          set -f
+          TARGET_DIR="${FTP_SERVER_DIR:-.}"
+          echo "Deploying to FTP Server: $FTP_SERVER"
+          echo "Target directory setting: $TARGET_DIR"
+
+          CD_CMD=""
+          if [ -n "$TARGET_DIR" ] && [ "$TARGET_DIR" != "/" ] && [ "$TARGET_DIR" != "." ]; then
+            CD_CMD="cd \"$TARGET_DIR\" || true;"
+          fi
+
+          lftp -u "$FTP_USERNAME" "$FTP_SERVER" <<EOF
+            set cmd:fail-exit yes
+            set ftp:ssl-allow no
+            set ftp:passive-mode true
+            set net:timeout 60
+            set net:max-retries 10
+            set net:reconnect-interval-base 5
+            $CD_CMD
+            pwd
+            mirror -R -v -c --only-newer --parallel=2 -X .git/ -X .git* -X .github/ -X scratch/ -X testpng/ -X uploads12/ -X uploads/bakupimage/ -X mail/uploads/badges/ -X mail/uploads/qrcodes/ -X *.zip -X *.rar -X *.tar.gz -X .ftp-deploy-sync-state.json -X README.md . .
+            bye
+          EOF
