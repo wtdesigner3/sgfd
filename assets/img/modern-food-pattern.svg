@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none">
+  <!-- Modern Food & Bakery Expo Minimalist Pattern -->
+  <g stroke="#da251c" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+    
+    <!-- 1. Wheat Grain Sprig (Top Left: 30, 20) -->
+    <g transform="translate(30, 20) rotate(-15 15 25)">
+      <path d="M15 45 C15 30 15 15 15 5" />
+      <path d="M15 5 C17 1 20 2 20 7 C20 12 17 14 15 15" />
+      <path d="M15 5 C13 1 10 2 10 7 C10 12 13 14 15 15" />
+      <path d="M15 15 C19 11 23 13 23 18 C23 23 18 24 15 25" />
+      <path d="M15 15 C11 11 7 13 7 18 C7 23 12 24 15 25" />
+      <path d="M15 25 C20 21 24 23 24 29 C24 34 18 35 15 36" />
+      <path d="M15 25 C10 21 6 23 6 29 C6 34 12 35 15 36" />
+    </g>
+
+    <!-- 2. Chef Toque / Cloche (Top Right: 120, 25) -->
+    <g transform="translate(120, 25)">
+      <path d="M6 30 L34 30" />
+      <path d="M9 30 L9 24 C5 24 3 20 4 16 C5 12 9 11 11 12 C12 8 16 5 20 5 C24 5 28 8 29 12 C31 11 35 12 36 16 C37 20 35 24 31 24 L31 30" />
+      <line x1="14" y1="30" x2="14" y2="26" />
+      <line x1="20" y1="30" x2="20" y2="26" />
+      <line x1="26" y1="30" x2="26" y2="26" />
+    </g>
+
+    <!-- 3. Center Modern Sparkle / Star (82, 82) -->
+    <g transform="translate(82, 82)">
+      <path d="M8 0 Q8 8 0 8 Q8 8 8 16 Q8 8 16 8 Q8 8 8 0 Z" fill="#da251c" fill-opacity="0.25" stroke-width="0.9"/>
+    </g>
+
+    <!-- 4. Coffee / Beverage Cup with Steam (Bottom Left: 25, 115) -->
+    <g transform="translate(25, 115)">
+      <path d="M6 14 C6 26 24 26 24 14 L6 14 Z" />
+      <path d="M24 16 C27 16 29 18 29 20 C29 22 27 24 24 24" />
+      <path d="M3 27 L27 27" />
+      <path d="M11 10 C10 8 12 6 11 4" />
+      <path d="M16 10 C15 8 17 6 16 4" />
+    </g>
+
+    <!-- 5. Bakery Croissant / Bread Loaf (Bottom Right: 120, 115) -->
+    <g transform="translate(120, 115)">
+      <path d="M5 22 C7 14 14 10 20 10 C26 10 33 14 35 22 C29 26 11 26 5 22 Z" />
+      <path d="M12 18 C14 13 18 13 19 18" />
+      <path d="M21 18 C23 13 27 13 28 18" />
+    </g>
+
+    <!-- 6. Cutlery Accent (Center Top / Bottom seam dots) -->
+    <circle cx="90" cy="20" r="1.6" fill="#da251c" stroke="none" />
+    <circle cx="90" cy="160" r="1.6" fill="#da251c" stroke="none" />
+    <circle cx="10" cy="90" r="1.6" fill="#da251c" stroke="none" />
+    <circle cx="170" cy="90" r="1.6" fill="#da251c" stroke="none" />
+
+    <!-- 7. Subtle Corner Geo Accents -->
+    <path d="M0 8 L8 0 M0 14 L14 0" stroke-width="1.0" />
+    <path d="M180 8 L172 0 M180 14 L166 0" stroke-width="1.0" />
+    <path d="M0 172 L8 180 M0 166 L14 180" stroke-width="1.0" />
+    <path d="M180 172 L172 180 M180 166 L166 180" stroke-width="1.0" />
+  </g>
+</svg>

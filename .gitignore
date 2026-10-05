@@ -1,0 +1,23 @@
+# Dependency & system files
+.DS_Store
+Thumbs.db
+*.log
+*.phpupgrader.*
+.env
+.env.*
+
+# Editor directories
+.vscode/
+.idea/
+
+# Temporary / Scratch directories
+scratch/
+testpng/
+uploads12/
+uploads/bakupimage/
+
+# Deployment sync artifacts
+.ftp-deploy-sync-state.json
+
+# Local config overrides
+inc/config.local.php

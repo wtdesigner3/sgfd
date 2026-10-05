@@ -1,0 +1,129 @@
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: brown;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* body{
+  background-image: url('../img/pp1.svg');
+} */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 0;
+  margin: 60px 0;
+
+}
+
+/* counter */
+
+
+.milestone {
+  font-size: 50px;
+}
+
+/* .milestone::after{
+content: "+";
+position: absolute;
+height: 50px;
+width: 50px;
+font-weight: 900;
+
+} */
+
+
+/* counter-end */
+
+/* clients */
+
+
+.c-image-box {
+  margin: 0px;
+  height: 150px;
+  width: 150px;
+  margin: auto;
+}
+
+
+/* clients-end */
+
+/* services */
+
+.service-card {
+  /* background-image: url('../img/pulse.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+  position: relative;
+  height: 300px;
+  width: 100%;
+  text-align: center;
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  background-color: #0000009e;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.service-card h1 {
+
+position: absolute;
+
+z-index: 11111;
+
+color: white;
+
+font-size: 20px;
+
+transform: rotate(270deg);
+
+right: 36%;
+
+top: 50%;
+
+text-align: center;
+
+/* transform: translate(-50%, -50%); */
+
+width: 100%;
+
+font-weight: 700;
+
+margin: 0;
+
+text-transform: uppercase;
+}
+
+.service-card img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* services-end */
+

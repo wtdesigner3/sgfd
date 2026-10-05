@@ -1,0 +1,7 @@
+# Promotion By: Expert Digital India
+
+User-agent: *
+Allow: /
+Disallow: 
+
+Sitemap: https://sgfoodees.in/sitemap.xml

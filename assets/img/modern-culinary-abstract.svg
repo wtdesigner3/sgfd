@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
+  <!-- Modern Geometric Culinary & Bakery Motif -->
+  <g stroke="#da251c" stroke-width="0.9" opacity="0.3" stroke-linecap="round">
+    <!-- Center geometric flower/cloche arc -->
+    <circle cx="60" cy="60" r="18" stroke-dasharray="2 4" />
+    <circle cx="60" cy="60" r="6" fill="#da251c" fill-opacity="0.15" />
+    
+    <!-- Stylized Wheat / Leaf Sprigs -->
+    <path d="M60 22 C64 30 64 38 60 42 C56 38 56 30 60 22 Z" />
+    <path d="M60 98 C64 90 64 82 60 78 C56 82 56 90 60 98 Z" />
+    <path d="M22 60 C30 64 38 64 42 60 C38 56 30 56 22 60 Z" />
+    <path d="M98 60 C90 64 82 64 78 60 C82 56 90 56 98 60 Z" />
+
+    <!-- Corner connecting arcs -->
+    <path d="M0 20 C10 20 20 10 20 0" />
+    <path d="M120 20 C110 20 100 10 100 0" />
+    <path d="M0 100 C10 100 20 110 20 120" />
+    <path d="M120 100 C110 100 100 110 100 120" />
+    
+    <!-- Corner micro dots -->
+    <circle cx="0" cy="0" r="1.5" fill="#da251c" stroke="none" />
+    <circle cx="120" cy="0" r="1.5" fill="#da251c" stroke="none" />
+    <circle cx="0" cy="120" r="1.5" fill="#da251c" stroke="none" />
+    <circle cx="120" cy="120" r="1.5" fill="#da251c" stroke="none" />
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+name: Deploy to seotycoons.in/sgdev
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  web-deploy:
+    name: 🚀 Deploy to Test Server (seotycoons.in/sgdev)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: 📂 Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || 'public_html/sgdev/' }}
+          protocol: ftp
+          port: 21
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/scratch/**
+            **/testpng/**
+            **/uploads12/**
+            **/uploads/bakupimage/**
+            README.md

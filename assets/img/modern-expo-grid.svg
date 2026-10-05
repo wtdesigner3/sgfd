@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+  <!-- Clean Modern Exhibition Micro-Grid & Cross Dot Matrix -->
+  <g stroke="#da251c" stroke-width="1.2">
+    <!-- Crosshairs at (30, 30) -->
+    <line x1="25" y1="30" x2="35" y2="30" />
+    <line x1="30" y1="25" x2="30" y2="35" />
+
+    <!-- Corner Dots -->
+    <circle cx="0" cy="0" r="2.2" fill="#da251c" stroke="none" />
+    <circle cx="60" cy="0" r="2.2" fill="#da251c" stroke="none" />
+    <circle cx="0" cy="60" r="2.2" fill="#da251c" stroke="none" />
+    <circle cx="60" cy="60" r="2.2" fill="#da251c" stroke="none" />
+    
+    <!-- Subtle secondary corner crosshair accents -->
+    <line x1="0" y1="30" x2="5" y2="30" />
+    <line x1="55" y1="30" x2="60" y2="30" />
+    <line x1="30" y1="0" x2="30" y2="5" />
+    <line x1="30" y1="55" x2="30" y2="60" />
+  </g>
+</svg>

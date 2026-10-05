@@ -1,0 +1,9 @@
+# Secure Upload Directory: Prevent execution of scripts
+<FilesMatch "(?i)\.(php|phtml|php3|php4|php5|php7|php8|pht|phar|inc|pl|py|cgi|asp|aspx|sh|bash)$">
+    Require all denied
+</FilesMatch>
+
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .inc
+SetHandler default-handler
+
+Options -Indexes -ExecCGI
