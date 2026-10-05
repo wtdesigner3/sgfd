@@ -32,15 +32,9 @@ jobs:
           echo "Deploying to FTP Server: $FTP_SERVER"
           echo "Target directory setting: $TARGET_DIR"
 
-          # Create ~/.netrc for standard FTP credentials
-          cat << EOF > ~/.netrc
-machine $FTP_SERVER
-login $FTP_USERNAME
-password $FTP_PASSWORD
-default
-login $FTP_USERNAME
-password $FTP_PASSWORD
-EOF
+          # Configure ~/.netrc
+          printf "machine %s\nlogin %s\npassword %s\ndefault\nlogin %s\npassword %s\n" \
+            "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD" "$FTP_USERNAME" "$FTP_PASSWORD" > ~/.netrc
           chmod 600 ~/.netrc
 
           CD_CMD=""
@@ -48,15 +42,15 @@ EOF
             CD_CMD="cd \"$TARGET_DIR\" || true;"
           fi
 
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" <<EOF
-            set cmd:fail-exit yes
-            set ftp:ssl-allow no
-            set ftp:passive-mode true
-            set net:timeout 60
-            set net:max-retries 10
-            set net:reconnect-interval-base 5
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" -e "
+            set cmd:fail-exit yes;
+            set ftp:ssl-allow no;
+            set ftp:passive-mode true;
+            set net:timeout 60;
+            set net:max-retries 10;
+            set net:reconnect-interval-base 5;
             $CD_CMD
-            pwd
-            mirror -R -v -c --only-newer --parallel=2 -X .git/ -X .git* -X .github/ -X scratch/ -X testpng/ -X uploads12/ -X uploads/bakupimage/ -X mail/uploads/badges/ -X mail/uploads/qrcodes/ -X *.zip -X *.rar -X *.tar.gz -X .ftp-deploy-sync-state.json -X README.md . .
-            bye
-EOF
+            pwd;
+            mirror -R -v -c --only-newer --parallel=2 -X .git/ -X .git* -X .github/ -X scratch/ -X testpng/ -X uploads12/ -X uploads/bakupimage/ -X mail/uploads/badges/ -X mail/uploads/qrcodes/ -X *.zip -X *.rar -X *.tar.gz -X .ftp-deploy-sync-state.json -X README.md . .;
+            bye;
+          "
