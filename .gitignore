@@ -23,6 +23,8 @@ mail/uploads/qrcodes/
 
 # Deployment sync artifacts
 .ftp-deploy-sync-state.json
+/.deploy_token
+/deploy_unpacker.php
 
 # Local config overrides
 inc/config.local.php

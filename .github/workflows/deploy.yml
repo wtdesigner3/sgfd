@@ -9,18 +9,45 @@ on:
 
 jobs:
   web-deploy:
-    name: 🚀 Deploy to Test Server (seotycoons.in/sgdev)
+    name: 🚀 Fast Deploy to Test Server (seotycoons.in/sgdev)
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: 🚚 Checkout Code
         uses: actions/checkout@v4
 
+      - name: 📦 Package Site into deploy.zip
+        run: |
+          echo "Packaging site files..."
+          zip -r -q deploy.zip . \
+            -x ".git/*" \
+            -x ".git*" \
+            -x ".github/*" \
+            -x "scratch/*" \
+            -x "testpng/*" \
+            -x "uploads12/*" \
+            -x "uploads/bakupimage/*" \
+            -x "mail/uploads/badges/*" \
+            -x "mail/uploads/qrcodes/*" \
+            -x "*.zip" \
+            -x "*.rar" \
+            -x "*.tar.gz" \
+            -x "README.md"
+          ls -lh deploy.zip
+
+      - name: 🔑 Prepare Deployment Token & Unpacker
+        run: |
+          DEPLOY_TOKEN=$(openssl rand -hex 16)
+          echo "DEPLOY_TOKEN=$DEPLOY_TOKEN" >> $GITHUB_ENV
+          echo "$DEPLOY_TOKEN" > .deploy_token
+          cp .github/deploy_unpacker.php ./deploy_unpacker.php
+          echo "Token and unpacker ready."
+
       - name: 🛠️ Install LFTP
         run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
-      - name: 🚀 Sync files via LFTP
+      - name: 🚀 Upload Archive & Unpacker via FTP
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
@@ -32,11 +59,6 @@ jobs:
           echo "Deploying to FTP Server: $FTP_SERVER"
           echo "Target directory setting: $TARGET_DIR"
 
-          # Configure ~/.netrc
-          printf "machine %s\nlogin %s\npassword %s\ndefault\nlogin %s\npassword %s\n" \
-            "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD" "$FTP_USERNAME" "$FTP_PASSWORD" > ~/.netrc
-          chmod 600 ~/.netrc
-
           CD_CMD=""
           if [ -n "$TARGET_DIR" ] && [ "$TARGET_DIR" != "/" ] && [ "$TARGET_DIR" != "." ]; then
             CD_CMD="cd \"$TARGET_DIR\" || true;"
@@ -46,11 +68,35 @@ jobs:
             set cmd:fail-exit yes;
             set ftp:ssl-allow no;
             set ftp:passive-mode true;
-            set net:timeout 60;
-            set net:max-retries 10;
+            set net:timeout 180;
+            set net:max-retries 5;
             set net:reconnect-interval-base 5;
             $CD_CMD
             pwd;
-            mirror -R -v -c --only-newer --parallel=2 -X .git/ -X .git* -X .github/ -X scratch/ -X testpng/ -X uploads12/ -X uploads/bakupimage/ -X mail/uploads/badges/ -X mail/uploads/qrcodes/ -X *.zip -X *.rar -X *.tar.gz -X .ftp-deploy-sync-state.json -X README.md . .;
+            put -c deploy.zip;
+            put -c deploy_unpacker.php;
+            put -c .deploy_token;
             bye;
           "
+          echo "Upload complete!"
+
+      - name: ⚡ Unpack on Server
+        run: |
+          echo "Calling deploy_unpacker.php on server..."
+          RESPONSE=$(curl -s -k "http://seotycoons.in/sgdev/deploy_unpacker.php?token=${{ env.DEPLOY_TOKEN }}" || true)
+          echo "Server response: $RESPONSE"
+
+          if [[ "$RESPONSE" == *"SUCCESS"* ]]; then
+            echo "🎉 Site deployed and extracted cleanly in seconds!"
+          else
+            echo "⚠️ Trying HTTPS endpoint..."
+            RESPONSE_HTTPS=$(curl -s -k "https://seotycoons.in/sgdev/deploy_unpacker.php?token=${{ env.DEPLOY_TOKEN }}" || true)
+            echo "HTTPS response: $RESPONSE_HTTPS"
+            if [[ "$RESPONSE_HTTPS" == *"SUCCESS"* ]]; then
+              echo "🎉 Site deployed and extracted cleanly via HTTPS!"
+            else
+              echo "❌ Error unpacking files. Direct response:"
+              curl -i -k "http://seotycoons.in/sgdev/deploy_unpacker.php?token=${{ env.DEPLOY_TOKEN }}" || true
+              exit 1
+            fi
+          fi
