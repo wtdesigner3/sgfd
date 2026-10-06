@@ -23,6 +23,19 @@ $pageDesc = "Read authentic reviews, exhibitor experiences, and trade buyer feed
     <?php include('inc/head.php'); ?>
     <!-- Testimonial Specific Stylesheet -->
     <link href="<?= SITE_URL ?>assets/css/testimonial.css?v=<?= time() ?>" rel="stylesheet">
+    <script>
+    // Fail-safe preloader auto-dismiss
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+            var loader = document.querySelector('.loader-wrap');
+            if (loader) {
+                loader.style.transition = 'opacity 0.4s ease';
+                loader.style.opacity = '0';
+                setTimeout(function() { loader.style.display = 'none'; }, 400);
+            }
+        }, 800);
+    });
+    </script>
 </head>
 
 <body>
@@ -517,6 +530,7 @@ $pageDesc = "Read authentic reviews, exhibitor experiences, and trade buyer feed
 
         <!-- Footer -->
         <?php include('inc/footer.php'); ?>
+        <?php include('inc/footer-data.php'); ?>
         <!-- Footer end -->
 
     </div>
