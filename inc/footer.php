@@ -78,8 +78,13 @@
                                         <li><span>Email: </span><a href="mailto:<?= $contact['con_email2'] ?>"><?= $contact['con_email1'] ?></a>
                                         </li>
                                         <li><span>Call: </span>
-                                        <a href="tel:<?= $contact['con_phone1'] ?>"><?= $contact['con_phone1'] ?></a>
-                                        <a href="tel:<?= $contact['con_phone3'] ?>"><?= $contact['con_phone3'] ?></a>
+                                        <?php 
+                                        $footer_phones = [];
+                                        if(!empty($contact['con_phone1'])) $footer_phones[] = '<a href="tel:' . $contact['con_phone1'] . '">' . $contact['con_phone1'] . '</a>';
+                                        if(!empty($contact['con_phone2'])) $footer_phones[] = '<a href="tel:' . $contact['con_phone2'] . '">' . $contact['con_phone2'] . '</a>';
+                                        if(!empty($contact['con_phone3'])) $footer_phones[] = '<a href="tel:' . $contact['con_phone3'] . '">' . $contact['con_phone3'] . '</a>';
+                                        echo implode(', ', $footer_phones);
+                                        ?>
                                         </li>
                                     </ul>
                                 </div>

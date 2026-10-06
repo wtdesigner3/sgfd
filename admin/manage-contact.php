@@ -234,7 +234,7 @@ if(isset($_POST['subdetail'])){
                                                                               <tbody>
                                                                                   <tr>
                                                                                       <td><strong>Phone :</strong></td>
-                                                                                      <td><strong><?php echo $root['con_phone1'];?>, <?php echo $root['con_phone2'];?></strong></td>
+                                                                                      <td><strong><?php echo $root['con_phone1'];?>, <?php echo $root['con_phone2'];?>, <?php echo $root['con_phone3'];?></strong></td>
                                                                                   </tr>
                                                                                   <tr>
                                                                                       <td><strong>Email : </strong></td>
