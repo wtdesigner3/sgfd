@@ -15,6 +15,7 @@ $pass = $_GET['pass'] ?? null;
     <meta name="description" content="<?= $profile['pro_detail'] ?>">
     <meta name="keywords" content="<?= $profile['pro_keyword'] ?>">
     <?php include('inc/head.php'); ?>
+    <link href="<?= SITE_URL ?>assets/css/home-testimonial.css?v=<?= time() ?>" rel="stylesheet">
     
      <link rel="canonical" href="https://sgfoodees.in/home" />
       <meta name="author" content="SGFOODEES INFOTECH LLP">
@@ -520,56 +521,169 @@ if(mysqli_num_rows($bannerValues) > 0){
         
         
 <?php
-$videoTestimonial = mysqli_query($conn,"SELECT * FROM `tbl_video_testimonia` WHERE `status` = '1' ORDER BY `sort`");
-if(mysqli_num_rows($videoTestimonial) > 0){
+$writtenTestimonials = mysqli_query($conn, "SELECT * FROM `tbl_testimonial` WHERE `tt_status` = '1' ORDER BY `tt_sort` ASC, `tt_id` DESC");
+$videoTestimonials = mysqli_query($conn, "SELECT * FROM `tbl_video_testimonia` WHERE `status` = '1' ORDER BY `sort` ASC");
+$hasWritten = ($writtenTestimonials && mysqli_num_rows($writtenTestimonials) > 0);
+$hasVideos = ($videoTestimonials && mysqli_num_rows($videoTestimonials) > 0);
+
+if ($hasWritten || $hasVideos) {
 ?>
-             <section class="about-style-two sec-pad n-about pt-5">
-            <div class="auto-container ">
-                <div class="s-style d-flex justify-content-center mb-5">
-                    <h1 class="">What Our Exhibitors Say
-                    </h1>
+        <!-- Testimonials & Reviews Section -->
+        <section class="about-style-two sec-pad n-about pt-5 patt-bg home-testimonial-sec" id="testimonials">
+            <div class="auto-container">
+                <!-- Section Header -->
+                <div class="tm-home-header" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+                    <span class="tm-home-subbadge"><i class="fa-solid fa-star text-warning"></i> TESTIMONIALS & REVIEWS</span>
+                    <div class="s-style mb-2">
+                        <h1>Voices of Success</h1>
+                    </div>
+                    <p class="tm-home-subtitle">
+                        Hear authentic feedback and business growth stories from machinery exhibitors, master bakers, and trade buyers at SG Foodees Expo.
+                    </p>
+
+                    <?php if ($hasWritten && $hasVideos): ?>
+                    <!-- Tab Switcher -->
+                    <div class="tm-tab-toggle-wrap">
+                        <button type="button" class="tm-tab-btn active" data-target="#writtenTestimonialPane">
+                            <i class="fa-solid fa-comment-dots"></i> Verified Reviews
+                        </button>
+                        <button type="button" class="tm-tab-btn" data-target="#videoTestimonialPane">
+                            <i class="fa-solid fa-circle-play"></i> Video Experiences
+                        </button>
+                    </div>
+                    <?php endif; ?>
                 </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-12" >
-                        <div class="vt-carousel-wrap">
-    <div class="vt-track" id="vtTrack" role="list">
-<?php
-    while($rowVideoTestimonial = mysqli_fetch_assoc($videoTestimonial)){
+                <?php if ($hasWritten): ?>
+                <!-- Written Testimonial Slick Slider Pane -->
+                <div class="tm-slider-pane" id="writtenTestimonialPane" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">
+                    <div class="tm-slider-container">
+                        <div class="tm-slider-track" id="homeTestimonialSlider">
+                            <?php while ($rowTm = mysqli_fetch_assoc($writtenTestimonials)): 
+                                // Author initials for monogram fallback
+                                $nameParts = explode(' ', trim($rowTm['tt_name']));
+                                $initials = '';
+                                foreach ($nameParts as $np) {
+                                    if (!empty($np)) $initials .= strtoupper($np[0]);
+                                    if (strlen($initials) >= 2) break;
+                                }
+                                if (empty($initials)) $initials = 'SG';
+                            ?>
+                            <div>
+                                <div class="tm-home-card">
+                                    <i class="fa-solid fa-quote-right tm-card-quote-bg"></i>
+                                    
+                                    <div class="tm-card-header">
+                                        <div class="tm-stars-wrap">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <span class="tm-rating-val">5.0</span>
+                                        </div>
+                                        <span class="tm-verified-tag">
+                                            <i class="fa-solid fa-circle-check"></i> Verified
+                                        </span>
+                                    </div>
 
-?>
-      <!-- CARD 1 -->
-      <div class="vt-card" data-index="0" data-videoid="<?= $rowVideoTestimonial['v_code']; ?>" role="listitem">
-        <div class="vt-thumb">
-          <img src="https://img.youtube.com/vi/<?= $rowVideoTestimonial['v_code']; ?>/hqdefault.jpg" alt="Testimonial 1" loading="lazy">
-        </div>
-        <div class="vt-play" aria-hidden="true"></div>
-        <div class="vt-meta">
-        <?php
-        if(!empty($rowVideoTestimonial['tag'])){
-        ?>
-          <span class="vt-badge"><?= $rowVideoTestimonial['tag']; ?></span>
-        <?php } ?>  
-          <p class="vt-name"><?= $rowVideoTestimonial['title']; ?></p>
-          <p class="vt-role"><?= $rowVideoTestimonial['subtitle']; ?></p>
-        </div>
-        <div class="vt-iframe-wrap"></div>
-      </div>
-<?php } ?>
-    </div>
-  </div>
+                                    <p class="tm-card-text">
+                                        "<?= htmlspecialchars($rowTm['tt_detail']); ?>"
+                                    </p>
 
-  <div class="vt-nav">
-    <button class="vt-btn" id="vtPrev" aria-label="Previous">&#8592;</button>
-    <div class="vt-dots" id="vtDots"></div>
-    <button class="vt-btn" id="vtNext" aria-label="Next">&#8594;</button>
-  </div>
-                        
+                                    <div class="tm-card-author-wrap">
+                                        <?php if (!empty($rowTm['tt_image']) && file_exists('uploads/testimonial/' . $rowTm['tt_image'])): ?>
+                                            <img src="<?= SITE_URL ?>uploads/testimonial/<?= $rowTm['tt_image']; ?>" alt="<?= htmlspecialchars($rowTm['tt_name']); ?>" class="tm-author-avatar" loading="lazy">
+                                        <?php else: ?>
+                                            <div class="tm-author-monogram"><?= $initials; ?></div>
+                                        <?php endif; ?>
+
+                                        <div class="tm-author-details">
+                                            <h4 class="tm-author-name"><?= htmlspecialchars($rowTm['tt_name']); ?></h4>
+                                            <p class="tm-author-role"><?= htmlspecialchars($rowTm['tt_location']); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endwhile; ?>
+                        </div>
+
+                        <!-- Custom Navigation Arrows -->
+                        <div class="tm-slider-controls">
+                            <button type="button" class="tm-arrow-btn tm-prev-written" aria-label="Previous Review">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                            <button type="button" class="tm-arrow-btn tm-next-written" aria-label="Next Review">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-              
+                <?php endif; ?>
+
+                <?php if ($hasVideos): ?>
+                <!-- Video Testimonial Slick Slider Pane -->
+                <div class="tm-slider-pane" id="videoTestimonialPane" style="<?= $hasWritten ? 'display: none;' : ''; ?>" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">
+                    <div class="tm-slider-container">
+                        <div class="tm-slider-track" id="homeVideoSlider">
+                            <?php 
+                            mysqli_data_seek($videoTestimonials, 0);
+                            while ($rowVid = mysqli_fetch_assoc($videoTestimonials)): 
+                                $vCode = htmlspecialchars($rowVid['v_code']);
+                                $vTitle = !empty($rowVid['title']) ? htmlspecialchars($rowVid['title']) : 'Exhibitor Experience';
+                                $vSub = !empty($rowVid['subtitle']) ? htmlspecialchars($rowVid['subtitle']) : 'SG Foodees Expo';
+                                $vTag = !empty($rowVid['tag']) ? htmlspecialchars($rowVid['tag']) : 'Video Review';
+                            ?>
+                            <div>
+                                <div class="tm-video-card">
+                                    <div class="tm-video-thumb-wrap" onclick="openHomeVideoModal('<?= $vCode ?>', '<?= addslashes($vTitle) ?>')">
+                                        <img src="https://img.youtube.com/vi/<?= $vCode ?>/hqdefault.jpg" alt="<?= $vTitle ?>" class="tm-video-thumb" loading="lazy">
+                                        <div class="tm-video-play-btn">
+                                            <i class="fa-solid fa-play"></i>
+                                        </div>
+                                        <span class="tm-video-badge"><?= $vTag ?></span>
+                                    </div>
+                                    <div class="tm-video-info">
+                                        <h4 class="tm-video-title"><?= $vTitle ?></h4>
+                                        <p class="tm-video-subtitle"><?= $vSub ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endwhile; ?>
+                        </div>
+
+                        <!-- Custom Arrows for Videos -->
+                        <div class="tm-slider-controls">
+                            <button type="button" class="tm-arrow-btn tm-prev-video" aria-label="Previous Video">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                            <button type="button" class="tm-arrow-btn tm-next-video" aria-label="Next Video">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+
             </div>
         </section>
+
+        <!-- Video Playback Modal -->
+        <div class="modal fade" id="homeVideoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content bg-dark text-white" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);">
+                    <div class="modal-header border-0 pb-0">
+                        <h6 class="modal-title" id="homeVideoModalTitle">Exhibitor Video Review</h6>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="closeHomeVideoModal()"></button>
+                    </div>
+                    <div class="modal-body p-3">
+                        <div class="ratio ratio-16x9">
+                            <iframe id="homeVideoIframe" src="" title="Video Testimonial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 <?php } ?>        
         
 </div>        
@@ -676,94 +790,117 @@ muteBtn.addEventListener("click", () => {
 
 
 <script>
-(function () {
-  var track  = document.getElementById('vtTrack');
-  var dotsEl = document.getElementById('vtDots');
-  var cards  = track.querySelectorAll('.vt-card');
-  var currentIndex = 0;
+$(document).ready(function () {
+    // 1. Initialize Written Testimonials Slick Slider
+    if ($('#homeTestimonialSlider').length) {
+        $('#homeTestimonialSlider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 4500,
+            pauseOnHover: true,
+            dots: true,
+            arrows: true,
+            prevArrow: $('.tm-prev-written'),
+            nextArrow: $('.tm-next-written'),
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows: true
+                    }
+                }
+            ]
+        });
+    }
 
+    // 2. Initialize Video Testimonials Slick Slider
+    if ($('#homeVideoSlider').length) {
+        $('#homeVideoSlider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: false,
+            dots: true,
+            arrows: true,
+            prevArrow: $('.tm-prev-video'),
+            nextArrow: $('.tm-next-video'),
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows: true
+                    }
+                }
+            ]
+        });
+    }
 
-  cards.forEach(function (card, i) {
-    var dot = document.createElement('button');
-    dot.className = 'vt-dot' + (i === 0 ? ' is-active' : '');
-    dot.setAttribute('aria-label', 'Go to testimonial ' + (i + 1));
-    dot.addEventListener('click', function () { scrollToCard(i); });
-    dotsEl.appendChild(dot);
+    // 3. Tab switching between Written Reviews and Video Experiences
+    $('.tm-tab-btn').on('click', function () {
+        var targetId = $(this).data('target');
+        $('.tm-tab-btn').removeClass('active');
+        $(this).addClass('active');
 
-   
-    card.addEventListener('click', function () {
-      var vid = card.getAttribute('data-videoid');
-      if (vid) playVideo(card, vid);
+        $('.tm-slider-pane').hide();
+        $(targetId).fadeIn(250, function () {
+            if (targetId === '#videoTestimonialPane') {
+                if ($('#homeVideoSlider').hasClass('slick-initialized')) {
+                    $('#homeVideoSlider').slick('setPosition');
+                }
+            } else {
+                if ($('#homeTestimonialSlider').hasClass('slick-initialized')) {
+                    $('#homeTestimonialSlider').slick('setPosition');
+                }
+            }
+        });
     });
-  });
+});
 
-  function playVideo(card, id) {
-    track.querySelectorAll('.vt-iframe-wrap.is-playing').forEach(function (el) {
-      el.innerHTML = '';
-      el.classList.remove('is-playing');
+// 4. Video Modal handlers
+function openHomeVideoModal(code, title) {
+    var modalEl = document.getElementById('homeVideoModal');
+    if (!modalEl) return;
+    var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+    var iframe = document.getElementById('homeVideoIframe');
+    if (iframe) {
+        iframe.src = 'https://www.youtube.com/embed/' + code + '?autoplay=1&rel=0';
+    }
+    var titleEl = document.getElementById('homeVideoModalTitle');
+    if (titleEl) {
+        titleEl.innerText = title || 'Exhibitor Video Review';
+    }
+    modal.show();
+}
+
+function closeHomeVideoModal() {
+    var iframe = document.getElementById('homeVideoIframe');
+    if (iframe) iframe.src = '';
+}
+
+var homeVidModal = document.getElementById('homeVideoModal');
+if (homeVidModal) {
+    homeVidModal.addEventListener('hidden.bs.modal', function () {
+        closeHomeVideoModal();
     });
-    track.querySelectorAll('.vt-card.is-active').forEach(function (el) {
-      el.classList.remove('is-active');
-    });
-    var wrap   = card.querySelector('.vt-iframe-wrap');
-    var iframe = document.createElement('iframe');
-    iframe.src   = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-    iframe.title = 'Video testimonial';
-    iframe.allow = 'autoplay; encrypted-media';
-    iframe.setAttribute('allowfullscreen', '');
-    wrap.appendChild(iframe);
-    wrap.classList.add('is-playing');
-    card.classList.add('is-active');
-  }
-
-  function scrollToCard(index) {
-    if (!cards[index]) return;
-    cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    updateDots(index);
-    currentIndex = index;
-  }
-
-  function updateDots(active) {
-    dotsEl.querySelectorAll('.vt-dot').forEach(function (d, i) {
-      d.classList.toggle('is-active', i === active);
-    });
-  }
-
-  document.getElementById('vtNext').addEventListener('click', function () {
-    currentIndex = Math.min(currentIndex + 1, cards.length - 1);
-    scrollToCard(currentIndex);
-  });
-  document.getElementById('vtPrev').addEventListener('click', function () {
-    currentIndex = Math.max(currentIndex - 1, 0);
-    scrollToCard(currentIndex);
-  });
-
-  
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var idx = parseInt(entry.target.getAttribute('data-index'));
-        currentIndex = idx;
-        updateDots(idx);
-      }
-    });
-  }, { root: track, threshold: 0.6 });
-  cards.forEach(function (c) { observer.observe(c); });
-
-  
-  var isDragging = false, startX, scrollLeft;
-  track.addEventListener('mousedown', function (e) {
-    isDragging = true; track.classList.add('is-grabbing');
-    startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft;
-  });
-  document.addEventListener('mousemove', function (e) {
-    if (!isDragging) return; e.preventDefault();
-    track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.2;
-  });
-  document.addEventListener('mouseup', function () {
-    isDragging = false; track.classList.remove('is-grabbing');
-  });
-})();
+}
 </script>
 </body>
 

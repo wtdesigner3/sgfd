@@ -18,7 +18,6 @@
                                         <li><a href="<?= SITE_URL ?>contact" class="text-dark text-decoration-none">Contact us</a></li>
                                         <li><a href="<?= SITE_URL ?>exhibit" class="text-dark text-decoration-none">Exhibitor</a></li>
                                         <li><a href="<?= SITE_URL ?>resources" class="text-dark text-decoration-none">Resources</a></li>
-                                        <li><a href="<?= SITE_URL ?>testimonial" class="text-dark text-decoration-none">Testimonials</a></li>
                                         <li><a href="<?= SITE_URL ?>blogs" class="text-dark text-decoration-none">Blogs</a></li>
                                         <!--<li><a href="https://sgfoodees.in/spices-exhibition-services-in-india.php" class="text-dark text-decoration-none">Food & Backery Exhibition</a></li>-->
                                     </ul>
