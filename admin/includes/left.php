@@ -1,8 +1,7 @@
 <?php 
 $directoryURI = $_SERVER['REQUEST_URI'];
 $path = parse_url($directoryURI, PHP_URL_PATH);
-$components = explode('/', $path);
-$first_part = $components[4];
+$first_part = basename($path);
 
 
 $sqqll ="SELECT `pro_id`, `pro_logo`,`pro_dark_logo`, `pro_favicon` , `pro_title`, `pro_keyword`, `pro_detail` FROM `tbl_profile`";
@@ -60,7 +59,8 @@ $rowww = $resulltt->fetch_assoc();
                         	<li><a href="manage-director.php">Director Management </a></li>
                         	<li><a href="manage-support-association.php">Associa. Management </a></li>
                         	<li><a href="manage-venue.php">Venue Management </a></li>
-                        	<li><a href="manage-video-testimonials.php">video Testimonial </a></li>
+                        	<li><a href="manage-testimonial.php">Testimonials</a></li>
+                        	<li><a href="manage-video-testimonials.php">Video Testimonials</a></li>
         					<!--<li><a href="manage-acheivements.php">Achievements Manag..</a></li>-->
         			  <!--    	<li><a href="manage-clients.php">Clients Manag..</a></li>-->
         			  <!--    	<li><a href="manage-get-in-touch.php">Get In Touch Manag..</a></li>-->
@@ -207,13 +207,17 @@ $rowww = $resulltt->fetch_assoc();
 						</ul>
 					</li>
                      
-     <!--             <li class="has-sub  <?php if($first_part=="manage-testimonial.php" || $first_part=="add-testimonial.php" || $first_part=="edit-testimonial.php") { echo "active"; } ?>">-->
-					<!--	<a href="manage-testimonial.php">-->
-					<!--		<b class="caret"></b>-->
-					<!--		<i class="fa fa-align-left"></i> -->
-					<!--		<span>Testimonial Manage..</span>-->
-					<!--	</a>-->
-					<!--</li> -->
+					<li class="has-sub <?php if(in_array($first_part, ['manage-testimonial.php', 'add-testimonial.php', 'edit-testimonial.php', 'manage-video-testimonials.php', 'add-video-testimonials.php', 'edit-video-testimonials.php'])) { echo 'active'; } ?>">
+						<a href="javascript:;">
+							<b class="caret"></b>
+							<i class="fa fa-comments"></i> 
+							<span>Testimonials</span>
+						</a>
+						<ul class="sub-menu">
+							<li class="<?php if(in_array($first_part, ['manage-testimonial.php', 'add-testimonial.php', 'edit-testimonial.php'])) { echo 'active'; } ?>"><a href="manage-testimonial.php">Written Reviews</a></li>
+							<li class="<?php if(in_array($first_part, ['manage-video-testimonials.php', 'add-video-testimonials.php', 'edit-video-testimonials.php'])) { echo 'active'; } ?>"><a href="manage-video-testimonials.php">Video Testimonials</a></li>
+						</ul>
+					</li>
 					
      <!--               <li class="has-sub  <?php if($first_part=="manage-focusingon.php") { echo "active"; } ?>">-->
 					<!--	<a href="manage-focusingon.php">-->

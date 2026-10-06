@@ -5,8 +5,11 @@ require('../inc/function.php');
  $totalBanners=mysqli_query($conn,"SELECT count(*) FROM `tbl_banner` where bnr_status='1'");
 $banners=mysqli_fetch_assoc($totalBanners);
 
- $totalTestimonials=mysqli_query($conn,"SELECT count(*) FROM `tbl_testimonial` where tt_status='1'");
- $testimonials=mysqli_fetch_assoc($totalTestimonials);
+$totalTestimonials = mysqli_query($conn, "SELECT count(*) as cnt FROM `tbl_testimonial` where tt_status='1'");
+$testimonials = mysqli_fetch_assoc($totalTestimonials);
+
+$totalVideoTestimonials = mysqli_query($conn, "SELECT count(*) as cnt FROM `tbl_video_testimonia` where status='1'");
+$videoTestimonials = mysqli_fetch_assoc($totalVideoTestimonials);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,19 +76,32 @@ $banners=mysqli_fetch_assoc($totalBanners);
 					</div>
 				</div>
 				<!-- end col-3 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="widget widget-stats bg-blue">
+						<div class="stats-icon stats-icon-lg"><i class="fa fa-comments"></i></div>
+						<div class="stats-info">
+							<h4>WRITTEN TESTIMONIALS</h4>
+							<p style="font-size: 27px;"><?php echo $testimonials["cnt"] ?? 0; ?></p>	
+						</div>
+						<div class="stats-link">
+							<a href="manage-testimonial.php">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- end col-3 -->
 				<!-- begin col-3 -->
-				<!--<div class="col-lg-3 col-md-6">-->
-				<!--	<div class="widget widget-stats bg-black-lighter">-->
-				<!--		<div class="stats-icon stats-icon-lg"><i class="fa fa-address-card "></i></div>-->
-				<!--		<div class="stats-info">-->
-				<!--			<h4>TOTAL TESTIMONIALS</h4>-->
-				<!--			<p style="font-size: 27px;"><?php echo $testimonials["count(*)"]; ?></p>	-->
-				<!--		</div>-->
-				<!--		<div class="stats-link">-->
-				<!--			<a href="manage-testimonial.php">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>-->
-				<!--		</div>-->
-				<!--	</div>-->
-				<!--</div>-->
+				<div class="col-lg-3 col-md-6">
+					<div class="widget widget-stats bg-purple">
+						<div class="stats-icon stats-icon-lg"><i class="fa fa-video"></i></div>
+						<div class="stats-info">
+							<h4>VIDEO TESTIMONIALS</h4>
+							<p style="font-size: 27px;"><?php echo $videoTestimonials["cnt"] ?? 0; ?></p>	
+						</div>
+						<div class="stats-link">
+							<a href="manage-video-testimonials.php">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+						</div>
+					</div>
+				</div>
 				<!-- end col-3 -->
 			</div>
 			<!-- end row -->

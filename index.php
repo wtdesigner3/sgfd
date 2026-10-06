@@ -521,9 +521,22 @@ if(mysqli_num_rows($bannerValues) > 0){
         
         
 <?php
-$writtenTestimonials = mysqli_query($conn, "SELECT * FROM `tbl_testimonial` WHERE `tt_status` = '1' ORDER BY `tt_sort` ASC, `tt_id` DESC");
+$writtenTestimonialsQuery = mysqli_query($conn, "SELECT * FROM `tbl_testimonial` WHERE `tt_status` = '1' ORDER BY `tt_sort` ASC, `tt_id` DESC");
 $videoTestimonials = mysqli_query($conn, "SELECT * FROM `tbl_video_testimonia` WHERE `status` = '1' ORDER BY `sort` ASC");
-$hasWritten = ($writtenTestimonials && mysqli_num_rows($writtenTestimonials) > 0);
+
+$writtenRows = [];
+if ($writtenTestimonialsQuery) {
+    while ($r = mysqli_fetch_assoc($writtenTestimonialsQuery)) {
+        $writtenRows[] = $r;
+    }
+}
+$hasWritten = count($writtenRows) > 0;
+// If 3 or fewer rows, duplicate so Slick can slide and autoplay continuously on 3-column desktop
+$displayWritten = $writtenRows;
+if ($hasWritten && count($displayWritten) <= 3) {
+    $displayWritten = array_merge($displayWritten, $displayWritten);
+}
+
 $hasVideos = ($videoTestimonials && mysqli_num_rows($videoTestimonials) > 0);
 
 if ($hasWritten || $hasVideos) {
@@ -533,7 +546,6 @@ if ($hasWritten || $hasVideos) {
             <div class="auto-container">
                 <!-- Section Header -->
                 <div class="tm-home-header" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
-                    <span class="tm-home-subbadge"><i class="fa-solid fa-star text-warning"></i> TESTIMONIALS & REVIEWS</span>
                     <div class="s-style mb-2">
                         <h1>Voices of Success</h1>
                     </div>
@@ -559,7 +571,7 @@ if ($hasWritten || $hasVideos) {
                 <div class="tm-slider-pane" id="writtenTestimonialPane" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">
                     <div class="tm-slider-container">
                         <div class="tm-slider-track" id="homeTestimonialSlider">
-                            <?php while ($rowTm = mysqli_fetch_assoc($writtenTestimonials)): 
+                            <?php foreach ($displayWritten as $rowTm): 
                                 // Author initials for monogram fallback
                                 $nameParts = explode(' ', trim($rowTm['tt_name']));
                                 $initials = '';
@@ -605,7 +617,7 @@ if ($hasWritten || $hasVideos) {
                                     </div>
                                 </div>
                             </div>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </div>
 
                         <!-- Custom Navigation Arrows -->
@@ -635,18 +647,19 @@ if ($hasWritten || $hasVideos) {
                                 $vTag = !empty($rowVid['tag']) ? htmlspecialchars($rowVid['tag']) : 'Video Review';
                             ?>
                             <div>
-                                <div class="tm-video-card">
-                                    <div class="tm-video-thumb-wrap" onclick="openHomeVideoModal('<?= $vCode ?>', '<?= addslashes($vTitle) ?>')">
-                                        <img src="https://img.youtube.com/vi/<?= $vCode ?>/hqdefault.jpg" alt="<?= $vTitle ?>" class="tm-video-thumb" loading="lazy">
-                                        <div class="tm-video-play-btn">
-                                            <i class="fa-solid fa-play"></i>
-                                        </div>
-                                        <span class="tm-video-badge"><?= $vTag ?></span>
+                                <div class="vt-card" data-videoid="<?= $vCode; ?>" role="listitem">
+                                    <div class="vt-thumb">
+                                        <img src="https://img.youtube.com/vi/<?= $vCode; ?>/hqdefault.jpg" alt="<?= $vTitle; ?>" loading="lazy">
                                     </div>
-                                    <div class="tm-video-info">
-                                        <h4 class="tm-video-title"><?= $vTitle ?></h4>
-                                        <p class="tm-video-subtitle"><?= $vSub ?></p>
+                                    <div class="vt-play" aria-hidden="true"></div>
+                                    <div class="vt-meta">
+                                        <?php if (!empty($rowVid['tag'])): ?>
+                                            <span class="vt-badge"><?= $rowVid['tag']; ?></span>
+                                        <?php endif; ?>  
+                                        <p class="vt-name"><?= $vTitle; ?></p>
+                                        <p class="vt-role"><?= $vSub; ?></p>
                                     </div>
+                                    <div class="vt-iframe-wrap"></div>
                                 </div>
                             </div>
                             <?php endwhile; ?>
@@ -667,23 +680,6 @@ if ($hasWritten || $hasVideos) {
 
             </div>
         </section>
-
-        <!-- Video Playback Modal -->
-        <div class="modal fade" id="homeVideoModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content bg-dark text-white" style="border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);">
-                    <div class="modal-header border-0 pb-0">
-                        <h6 class="modal-title" id="homeVideoModalTitle">Exhibitor Video Review</h6>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="closeHomeVideoModal()"></button>
-                    </div>
-                    <div class="modal-body p-3">
-                        <div class="ratio ratio-16x9">
-                            <iframe id="homeVideoIframe" src="" title="Video Testimonial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 <?php } ?>        
         
 </div>        
@@ -791,14 +787,39 @@ muteBtn.addEventListener("click", () => {
 
 <script>
 $(document).ready(function () {
+    // Dynamic Equal Height function for Testimonial Cards
+    function equalizeTestimonialCardHeights() {
+        var $cards = $('#homeTestimonialSlider .tm-home-card');
+        if (!$cards.length) return;
+        $cards.css('min-height', '');
+        var maxHeight = 0;
+        $cards.each(function () {
+            var h = $(this).outerHeight();
+            if (h > maxHeight) {
+                maxHeight = h;
+            }
+        });
+        if (maxHeight > 0) {
+            $cards.css('min-height', maxHeight + 'px');
+        }
+    }
+
     // 1. Initialize Written Testimonials Slick Slider
-    if ($('#homeTestimonialSlider').length) {
-        $('#homeTestimonialSlider').slick({
+    var $tmSlider = $('#homeTestimonialSlider');
+    if ($tmSlider.length) {
+        $tmSlider.on('init setPosition', function () {
+            setTimeout(equalizeTestimonialCardHeights, 50);
+        });
+
+        $tmSlider.slick({
             slidesToShow: 3,
             slidesToScroll: 1,
             autoplay: true,
-            autoplaySpeed: 4500,
-            pauseOnHover: true,
+            autoplaySpeed: 3000,
+            speed: 700,
+            infinite: true,
+            pauseOnHover: false,
+            pauseOnFocus: false,
             dots: true,
             arrows: true,
             prevArrow: $('.tm-prev-written'),
@@ -808,7 +829,9 @@ $(document).ready(function () {
                     breakpoint: 1024,
                     settings: {
                         slidesToShow: 2,
-                        slidesToScroll: 1
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        infinite: true
                     }
                 },
                 {
@@ -816,16 +839,25 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
+                        autoplay: true,
+                        infinite: true,
                         arrows: true
                     }
                 }
             ]
         });
+
+        // Trigger height equalization after fonts and layout settle
+        setTimeout(equalizeTestimonialCardHeights, 200);
+        $(window).on('resize', function () {
+            equalizeTestimonialCardHeights();
+        });
     }
 
     // 2. Initialize Video Testimonials Slick Slider
-    if ($('#homeVideoSlider').length) {
-        $('#homeVideoSlider').slick({
+    var $vidSlider = $('#homeVideoSlider');
+    if ($vidSlider.length) {
+        $vidSlider.slick({
             slidesToShow: 3,
             slidesToScroll: 1,
             autoplay: false,
@@ -851,13 +883,59 @@ $(document).ready(function () {
                 }
             ]
         });
+
+        // Stop any playing video when user slides to next/prev
+        $vidSlider.on('beforeChange', function () {
+            stopAllPlayingVideos();
+        });
     }
 
-    // 3. Tab switching between Written Reviews and Video Experiences
+    // Helper: Stop playing videos
+    function stopAllPlayingVideos() {
+        $('#homeVideoSlider .vt-iframe-wrap.is-playing').each(function () {
+            $(this).html('').removeClass('is-playing');
+        });
+        $('#homeVideoSlider .vt-card.is-active').removeClass('is-active');
+    }
+
+    // 3. Previous VT-Card Inline Video Playback
+    $(document).on('click', '#homeVideoSlider .vt-card', function (e) {
+        // If clicking inside an already playing iframe, do nothing
+        if ($(e.target).closest('.vt-iframe-wrap').length) return;
+
+        var vid = $(this).attr('data-videoid');
+        if (!vid) return;
+
+        // If this card is already playing, toggle stop
+        if ($(this).hasClass('is-active')) {
+            $(this).find('.vt-iframe-wrap').html('').removeClass('is-playing');
+            $(this).removeClass('is-active');
+            return;
+        }
+
+        // Stop other active cards
+        stopAllPlayingVideos();
+
+        // Start playback inside this card's iframe wrapper
+        var $wrap = $(this).find('.vt-iframe-wrap');
+        var iframe = $('<iframe>', {
+            src: 'https://www.youtube.com/embed/' + vid + '?autoplay=1&rel=0&modestbranding=1&playsinline=1',
+            title: 'Video testimonial',
+            allow: 'autoplay; encrypted-media',
+            allowfullscreen: ''
+        });
+        $wrap.html(iframe).addClass('is-playing');
+        $(this).addClass('is-active');
+    });
+
+    // 4. Tab switching between Written Reviews and Video Experiences
     $('.tm-tab-btn').on('click', function () {
         var targetId = $(this).data('target');
         $('.tm-tab-btn').removeClass('active');
         $(this).addClass('active');
+
+        // Stop video playback when switching away
+        stopAllPlayingVideos();
 
         $('.tm-slider-pane').hide();
         $(targetId).fadeIn(250, function () {
@@ -868,39 +946,12 @@ $(document).ready(function () {
             } else {
                 if ($('#homeTestimonialSlider').hasClass('slick-initialized')) {
                     $('#homeTestimonialSlider').slick('setPosition');
+                    equalizeTestimonialCardHeights();
                 }
             }
         });
     });
 });
-
-// 4. Video Modal handlers
-function openHomeVideoModal(code, title) {
-    var modalEl = document.getElementById('homeVideoModal');
-    if (!modalEl) return;
-    var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-    var iframe = document.getElementById('homeVideoIframe');
-    if (iframe) {
-        iframe.src = 'https://www.youtube.com/embed/' + code + '?autoplay=1&rel=0';
-    }
-    var titleEl = document.getElementById('homeVideoModalTitle');
-    if (titleEl) {
-        titleEl.innerText = title || 'Exhibitor Video Review';
-    }
-    modal.show();
-}
-
-function closeHomeVideoModal() {
-    var iframe = document.getElementById('homeVideoIframe');
-    if (iframe) iframe.src = '';
-}
-
-var homeVidModal = document.getElementById('homeVideoModal');
-if (homeVidModal) {
-    homeVidModal.addEventListener('hidden.bs.modal', function () {
-        closeHomeVideoModal();
-    });
-}
 </script>
 </body>
 

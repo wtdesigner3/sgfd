@@ -1,8 +1,10 @@
 <?php
 // Disable caching
-header("Cache-Control: no-cache, must-revalidate"); // HTTP 1.1
-header("Pragma: no-cache"); // HTTP 1.0
-header("Expires: 0"); // Proxies
+if (!headers_sent()) {
+    header("Cache-Control: no-cache, must-revalidate"); // HTTP 1.1
+    header("Pragma: no-cache"); // HTTP 1.0
+    header("Expires: 0"); // Proxies
+}
 ?>
 
 <?php

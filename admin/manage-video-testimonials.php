@@ -1,84 +1,55 @@
 <?php
-// ini_set('display_errors', '1');
-// ini_set('display_startup_errors', '1');
-// error_reporting(E_ALL);
 $bb = isset($_POST['bb']) && is_array($_POST['bb']) ? array_map('intval', $_POST['bb']) : [];
 require('checksession.php');
 require('../inc/function.php');
-$bdata = mysqli_query($conn, "SELECT * FROM `tbl_video_testimonia`");
-$brec = mysqli_fetch_array($bdata);
-if (isset($_POST['Deactivate']) && $bb != '') {
+
+if (isset($_POST['Deactivate']) && !empty($bb)) {
 	foreach ($bb as $act) {
 		mysqli_query($conn, "update tbl_video_testimonia set status='0' where id='$act'");
 	}
+	$_SESSION['info'] = "Selected video testimonials deactivated successfully";
 }
 
-if (isset($_POST['Activate']) && $bb != '') {
+if (isset($_POST['Activate']) && !empty($bb)) {
 	foreach ($bb as $act) {
 		mysqli_query($conn, "update tbl_video_testimonia set status='1' where id='$act'");
 	}
+	$_SESSION['success'] = "Selected video testimonials activated successfully";
 }
 
-if (isset($_POST['Delete']) && $bb != '') {
+if (isset($_POST['Delete']) && !empty($bb)) {
 	foreach ($bb as $act) {
 		mysqli_query($conn, "delete from tbl_video_testimonia where id='$act'");
 	}
+	$_SESSION['warning'] = "Selected video testimonials deleted successfully";
 }
 
-$mqry = "select * from tbl_video_testimonia ";
-$mqry .= " order by id desc";
-$count1 =1;
-if(isset($_POST['submit']))
-{  
-      $vid = mysqli_real_escape_string($conn, $_POST['vid']);
-      $old = mysqli_real_escape_string($conn, $_POST['oldimg']);
-
-  $bimage = $_FILES['bimage']['name'];
-  if($bimage!=''){
-      $bimage = time() . "_" . $bimage;
-      @unlink("../uploads/banner/" . $old);
-      move_uploaded_file($_FILES["bimage"]["tmp_name"], "../uploads/banner/" . $bimage);
-  } else {
-    $bimage = $old;
-  }
-  if($vid!=''){
-	 $query=mysqli_query($conn,"UPDATE `tbl_banner_video` SET `sc_image`='$bimage' WHERE `sc_id`='$vid'" );
-  }
-  else{
-       $query=mysqli_query($conn,"INSERT INTO `tbl_banner_video`(`sc_image`) VALUES ('$bimage')" );
-  }
-	 	$_SESSION['success']="Video Updated successfully";
-}
-
+$mqry = "select * from tbl_video_testimonia order by sort asc, id desc";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php require('includes/head.php'); ?>
 
 <body>
-	<!-- begin #page-loader -->
-	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
 	<!-- begin #page-container -->
-	<div id="page-container" class="fade in page-sidebar-fixed page-header-fixed">
-		<!-- begin #header -->
+	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 		<?php require('includes/header.php'); ?>
-		<!-- begin #sidebar -->
 		<?php require('includes/left.php'); ?>
+
 		<!-- begin #content -->
 		<div id="content" class="content">
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb pull-right">
 				<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-				<li class="breadcrumb-item"><a href="javascript:;">Manage Video Testimonial</a></li>
-				<li class="breadcrumb-item active">Video Testimonial</li>
+				<li class="breadcrumb-item"><a href="javascript:;">Testimonials</a></li>
+				<li class="breadcrumb-item active">Video Testimonials</li>
 			</ol>
 			<!-- end breadcrumb -->
 			<!-- begin page-header -->
-			<h1 class="page-header"><a href="javascript:;" onClick="javascript:history.go(-1)" class="btn btn-l btn-icon btn-circle btn-primary" data-click="panel-remove"><i class="fa fa-arrow-left"></i></a> Manage Video Testimonial</h1>
+			<h1 class="page-header"><a href="javascript:;" onClick="javascript:history.go(-1)" class="btn btn-l btn-icon btn-circle btn-primary"><i class="fa fa-arrow-left"></i></a> Manage Video Testimonials</h1>
 			<!-- end page-header -->
 			<!-- begin row -->
 			<div class="row">
-				<!-- begin col-12 -->
 				<div class="col-lg-12">
 					<!-- begin panel -->
 					<div class="panel panel-inverse">
@@ -86,80 +57,43 @@ if(isset($_POST['submit']))
 						<div class="panel-heading">
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-refresh"></i></a>
+								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
 							</div>
-							<h4 class="panel-title">Manage Video Testimonial</h4>
+							<h4 class="panel-title">Manage Video Testimonials</h4>
 						</div>
 						<!-- end panel-heading -->
-						<br>
-						<div class="col-lg-12">
-						    	<!--<h3 class="panel-title">Manage Banner Video </h3>-->
-						 <form role="form" method="POST"  enctype="multipart/form-data" class="d-none">
-                  <div class="box-body">
-                    <input type="hidden" name="vid" value="<?= $brec['sc_id']; ?>">
-                        <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <input type="file" name="bimage" class="form-control" id="exampleInputFile">
-                  <input type="hidden" name="oldimg" value="<?= $brec['sc_image']; ?>">
-                  <p class="help-block">Image dimension must be 1920 × 1280 px & must be jpg format</p>
-                   <video autoplay muted loop id="myVideo" style="width:30%">
-                 <source src="../uploads/banner/<?= $brec['sc_image']; ?>" type="video/mp4">
-                        
-                 </video>
-               
-			    <div class="switcher">
-                 <a href="delete/banner_video.php?bid=<?= $brec['sc_id']; ?>" onClick="if(confirm('Are You Sure Want To Delete This Record')){ return true;} else { return false; }" data-toggle="tooltip" title="Delete" class='label label-sm label-danger'><i class="fa fa-trash"></i></a>
-                </div>
-              
-              </div>
-              	       <label for="exampleInputFile">Status</label>
-              	       <br>
-              	      <div class="switcher">
-                 	   
-					<input type="checkbox" onClick="updateIdd('<?php echo $brec['sc_id']; ?>')" name="switcher_checkbox_1" id="switcher_checkbox_0<?php echo $count1; ?>" <?php if ($brec['sc_status'] == '1') { echo "checked"; } else { } ?> value="1">
-					<label for="switcher_checkbox_0<?php echo $count1; ?>"></label>
-					</div>
-                 
-               <div class="box-footer">
-                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-             
-              </div>
-              </div>
-              <br>
-              <!-- /.box-body -->
 
-             
-            </form>
 						<form name="myform" method="post" action="">
 							<!-- begin alert -->
-							<div class="alert alert-secondary fade show">
-								<button type="button" class="close" data-dismiss="alert">
-									<span aria-hidden="true">&times;</span>
-								</button>
+							<div class="alert alert-secondary fade show mb-0">
 								<div class="btn-group btn-group-justified">
-									<a href="add-video-testimonials.php" class="btn btn-default active"><i class="fa fa-plus"></i> Add New Video Testimonial</a>
+									<a href="add-video-testimonials.php" class="btn btn-primary active"><i class="fa fa-plus"></i> Add New Video Testimonial</a>
 									<input type="Submit" name="Activate" value="Activate" class="btn btn-info btn-flat">
 									<input type="Submit" name="Deactivate" value="Deactivate" class="btn btn-warning btn-flat">
-									<input type="Submit" name="Delete" class="btn btn-danger btn-flat" value="Delete" onClick="if(confirm('Are You Sure Want To Delete This Record')){ return true;} else { return false; }">
+									<input type="Submit" name="Delete" class="btn btn-danger btn-flat" value="Delete" onClick="if(confirm('Are You Sure Want To Delete Selected Video Testimonial(s)?')){ return true;} else { return false; }">
 								</div>
 							</div>
-							 end alert 
+							<!-- end alert -->
+
 							<!-- begin panel-body -->
 							<div class="panel-body">
 								<div class="table-responsive">
-									<table id="data-table-responsive" class="table table-striped table-bordered">
+									<table id="data-table-responsive" class="table table-striped table-bordered align-middle">
 										<thead>
 											<tr>
-												<th width="1%">No</th>
-												<th width="1%" data-orderable="false">Video Code</th>
-												<th class="text-nowrap">Tag</th>
+												<th width="1%">S.No.</th>
+												<th width="1%">Preview</th>
 												<th class="text-nowrap">Title</th>
-												<th width="1%">Status</th>
-												<th width="1%">Edit</th>
-												<th width="1%">Delete</th>
-												<th width="1%"><input type="checkbox" id="select_all" name="check"></th>
+												<th class="text-nowrap">Subtitle</th>
+												<th class="text-nowrap">Tag / Category</th>
+												<th class="text-nowrap">Video Code</th>
+												<th width="1%" class="text-center">Order</th>
+												<th width="1%" class="text-center">Status</th>
+												<th width="1%" class="text-center">Edit</th>
+												<th width="1%" class="text-center">Delete</th>
+												<th width="1%" class="text-center"><input type="checkbox" id="select_all" name="check"></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -167,21 +101,53 @@ if(isset($_POST['submit']))
 											$count = 1;
 											$fetch = mysqli_query($conn, $mqry);
 											while ($web = mysqli_fetch_array($fetch)) {
+												$vcode = htmlspecialchars($web['v_code']);
+												$thumbUrl = "https://img.youtube.com/vi/{$vcode}/mqdefault.jpg";
 											?>
 												<tr class="odd gradeX">
-													<td width="1%" class="f-s-600 text-inverse"><?= $count; ?></td>
-													<td width="30%"style="font-weight:700; color:#000;"><?= $web['v_code']; ?></td>
-													<td width="30%"style="font-weight:700; color:#000;"><?= $web['tag']; ?></td>
-													<td width="30%"style="font-weight:700; color:#000;"><?= $web['title']; ?></td>
+													<td width="1%" class="f-s-600 text-inverse text-center"><?= $count; ?></td>
+													<td width="1%" class="text-center">
+														<a href="https://www.youtube.com/watch?v=<?= $vcode; ?>" target="_blank" title="Watch on YouTube" style="position:relative; display:inline-block; border-radius:6px; overflow:hidden; border:1px solid #ccc; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+															<img src="<?= $thumbUrl; ?>" style="width:72px; height:42px; object-fit:cover; display:block;" onerror="this.src='../uploads/no.png';">
+															<span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); color:#fff; font-size:14px;">
+																<i class="fa fa-play-circle text-danger" style="background:#fff; border-radius:50%;"></i>
+															</span>
+														</a>
+													</td>
+													<td style="font-weight:700;" class="text-inverse">
+														<?= !empty($web['title']) ? htmlspecialchars($web['title']) : '<span class="text-muted font-italic">(Untitled)</span>'; ?>
+													</td>
+													<td class="text-muted">
+														<small style="font-weight:600;"><?= htmlspecialchars($web['subtitle'] ?? ''); ?></small>
+													</td>
 													<td>
+														<?php if(!empty($web['tag'])): ?>
+															<span class="badge badge-info" style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px;"><?= htmlspecialchars($web['tag']); ?></span>
+														<?php else: ?>
+															<span class="text-muted">-</span>
+														<?php endif; ?>
+													</td>
+													<td>
+														<code><?= $vcode; ?></code>
+													</td>
+													<td width="1%" class="text-center font-weight-bold">
+														<span class="badge badge-default" style="font-size:11px;"><?= $web['sort']; ?></span>
+													</td>
+													<td class="text-center">
 														<div class="switcher">
-															<input type="checkbox" onClick="updateId('<?php echo $web['id']; ?>')" name="switcher_checkbox_1" id="switcher_checkbox_<?php echo $count; ?>" <?php if ($web['status'] == '1') { echo "checked"; } else { } ?> value="1">
+															<input type="checkbox" onClick="updateId('<?php echo $web['id']; ?>')" name="switcher_checkbox_1" id="switcher_checkbox_<?php echo $count; ?>" <?php if ($web['status'] == '1') { echo "checked"; } ?> value="1">
 															<label for="switcher_checkbox_<?php echo $count; ?>"></label>
 														</div>
 													</td>
-													<td><a href="edit-video-testimonials.php?bid=<?php echo $web['id']; ?>" class='label label-sm label-primary' data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i> Edit</a></td>
-													<td><a href="delete/video-testimonials.php?bid=<?php echo $web['id']; ?>" onClick="if(confirm('Are You Sure Want To Delete This Record')){ return true;} else { return false; }" data-toggle="tooltip" title="Delete" class='label label-sm label-danger'><i class="fa fa-trash"></i> Delete</a></td>
-													<td width="1%"><input type="checkbox" class="checkbox" value="<?php echo $web['id']; ?>" name="bb[]" id="bb[]"></td>
+													<td class="text-center">
+														<a href="edit-video-testimonials.php?bid=<?php echo $web['id']; ?>" class='label label-sm label-primary' title="Edit"><i class="fa fa-edit"></i> Edit</a>
+													</td>
+													<td class="text-center">
+														<a href="delete/video-testimonials.php?bid=<?php echo $web['id']; ?>" onClick="if(confirm('Are You Sure Want To Delete This Video Testimonial?')){ return true;} else { return false; }" class='label label-sm label-danger' title="Delete"><i class="fa fa-trash"></i> Delete</a>
+													</td>
+													<td width="1%" class="text-center">
+														<input type="checkbox" class="checkbox" value="<?php echo $web['id']; ?>" name="bb[]">
+													</td>
 												</tr>
 											<?php $count++;
 											} ?>
@@ -194,7 +160,6 @@ if(isset($_POST['submit']))
 					</div>
 					<!-- end panel -->
 				</div>
-				<!-- end col-10 -->
 			</div>
 			<!-- end row -->
 		</div>
@@ -212,56 +177,20 @@ if(isset($_POST['submit']))
 			App.init();
 			TableManageResponsive.init();
 		});
-	</script>
-	<script>
-    function updateId(id) {
-        $.ajax({
-            url: "status/video-testimonials.php",
-            type: "GET",
-            data: { id: id },
-            success: function(response) {
-                // alert(response);
-            },
-            error: function(xhr, status, error) {
-                console.error("An error occurred: " + error);
-            }
-        });
-    }
-	</script>
-		<script>
-		function updateIdd(id) {
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					//alert(xmlhttp.responseText);
+
+		function updateId(id) {
+			$.ajax({
+				url: "status/video-testimonials.php",
+				type: "GET",
+				data: { id: id },
+				success: function(response) {
+					// status updated
+				},
+				error: function(xhr, status, error) {
+					console.error("Status update error: " + error);
 				}
-			};
-			xmlhttp.open("GET", "status/video-testimonials.php?id=" + id, true);
-			xmlhttp.send();
+			});
 		}
 	</script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#select_all').on('click', function() {
-				if (this.checked) {
-					$('.checkbox').each(function() {
-						this.checked = true;
-					});
-				} else {
-					$('.checkbox').each(function() {
-						this.checked = false;
-					});
-				}
-			});
-			$('.checkbox').on('click', function() {
-				if ($('.checkbox:checked').length == $('.checkbox').length) {
-					$('#select_all').prop('checked', true);
-				} else {
-					$('#select_all').prop('checked', false);
-				}
-			});
-		});
-	</script>
 </body>
-
 </html>
