@@ -45,7 +45,7 @@ $rowww = $resulltt->fetch_assoc();
 							<span>Dashboard</span>
 						</a>
 					</li>
-                     <li class="has-sub <?php if($first_part=="manage-banner.php" || $first_part=="add-banner.php"  || $first_part=="manage-main-banner.php" || $first_part=="edit-banner.php" || $first_part=="manage-design.php" || $first_part=="manage-team.php" || $first_part=="add-team.php" || $first_part=="edit-team.php" || $first_part=="manage-home-product-extra.php" || $first_part=="manage-home-product.php" || $first_part=="manage-acheivements.php" || $first_part=="add-acheivements.php" || $first_part=="edit-acheivements.php" || $first_part=="manage-text-industry.php" || $first_part=="manage-industry.php" || $first_part=="edit-industry.php" || $first_part=="manage-feature-extra.php" || $first_part=="manage-feature.php" || $first_part=="edit-feature.php"){ echo "active"; } ?>">
+                     <li class="has-sub <?php if($first_part=="manage-banner.php" || $first_part=="add-banner.php"  || $first_part=="manage-main-banner.php" || $first_part=="edit-banner.php" || $first_part=="manage-design.php" || $first_part=="manage-team.php" || $first_part=="add-team.php" || $first_part=="edit-team.php" || $first_part=="manage-home-product-extra.php" || $first_part=="manage-home-product.php" || $first_part=="manage-acheivements.php" || $first_part=="add-acheivements.php" || $first_part=="edit-acheivements.php" || $first_part=="manage-text-industry.php" || $first_part=="manage-industry.php" || $first_part=="edit-industry.php" || $first_part=="manage-feature-extra.php" || $first_part=="manage-feature.php" || $first_part=="edit-feature.php" || $first_part=="manage-support-association.php" || $first_part=="add-support-association.php" || $first_part=="edit-support-association.php"){ echo "active"; } ?>">
 						<a href="javascript:;">
 							<b class="caret"></b>
 							<i class="fa fa-home"></i>
@@ -57,7 +57,7 @@ $rowww = $resulltt->fetch_assoc();
                         	<li><a href="manage-overview.php">Overview Management </a></li>
                         	<li><a href="manage-key-highlight.php">Key High. Management </a></li>
                         	<li><a href="manage-director.php">Director Management </a></li>
-                        	<li><a href="manage-support-association.php">Associa. Management </a></li>
+                        	<li class="<?php if($first_part=="manage-support-association.php" || $first_part=="add-support-association.php" || $first_part=="edit-support-association.php"){ echo "active"; } ?>"><a href="manage-support-association.php">Supporting Association</a></li>
                         	<li><a href="manage-venue.php">Venue Management </a></li>
                         	<li><a href="manage-testimonial.php">Testimonials</a></li>
                         	<li><a href="manage-video-testimonials.php">Video Testimonials</a></li>

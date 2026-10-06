@@ -385,21 +385,29 @@ if(mysqli_num_rows($bannerValues) > 0){
             
 
                 <?php
-                $support_association = mysqli_query($conn, "SELECT image,alt FROM tbl_support_association where id = '1'");
-                $support_association_cont = mysqli_fetch_assoc($support_association);
-                if(!empty($support_association_cont)){
+                $support_associations = mysqli_query($conn, "SELECT image, alt FROM tbl_support_association WHERE status = '1' ORDER BY id ASC LIMIT 3");
+                if($support_associations && mysqli_num_rows($support_associations) > 0){
                 ?>
         <section class="about-style-two sec-pad n-about pt-5">
-            <div class="auto-container ">
+            <div class="auto-container">
                 <div class="s-style d-flex justify-content-center mb-5">
-                    <h1 class="">Supporting Association
-                    </h1>
+                    <h1>Supporting Association</h1>
                 </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-4" data-aos="zoom-in"   data-aos-delay="400" data-aos-duration="800">
-                        <img loading="lazy" src="uploads/support-association/<?= $support_association_cont['image'] ?>" class="img-fluid" alt="<?= $support_association_cont['alt'] ?>">
+                <div class="row justify-content-center align-items-center">
+                    <?php 
+                    $delay = 200;
+                    while($assoc = mysqli_fetch_assoc($support_associations)) { 
+                    ?>
+                    <div class="col-lg-4 col-md-4 col-sm-6 text-center mb-4" data-aos="zoom-in" data-aos-delay="<?= $delay ?>" data-aos-duration="800">
+                        <div class="d-flex align-items-center justify-content-center p-2" style="min-height: 150px;">
+                            <img loading="lazy" src="uploads/support-association/<?= htmlspecialchars($assoc['image']) ?>" class="img-fluid" alt="<?= htmlspecialchars($assoc['alt']) ?>" style="max-height: 140px; width: auto; object-fit: contain;">
+                        </div>
                     </div>
+                    <?php 
+                        $delay += 200;
+                    } 
+                    ?>
                 </div>
               
             </div>
@@ -486,7 +494,7 @@ if(mysqli_num_rows($bannerValues) > 0){
             $pg_sponsor = mysqli_fetch_assoc($pg_sponsor1);
         ?>
         
-          <section class="about-style-two sec-pad n-about pt-5 patt-bg">
+          <section class="about-style-two sec-pad n-about pt-5 bg-white">
             <div class="auto-container ">
                 <div class="s-style d-flex justify-content-center mb-5">
                     <h1 class=""><?=$pg_sponsor['title']?></h1>
@@ -542,7 +550,7 @@ $hasVideos = ($videoTestimonials && mysqli_num_rows($videoTestimonials) > 0);
 if ($hasWritten || $hasVideos) {
 ?>
         <!-- Testimonials & Reviews Section -->
-        <section class="about-style-two sec-pad n-about pt-5 patt-bg home-testimonial-sec" id="testimonials">
+        <section class="about-style-two sec-pad n-about pt-5 home-testimonial-sec" id="testimonials">
             <div class="auto-container">
                 <!-- Section Header -->
                 <div class="tm-home-header" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">

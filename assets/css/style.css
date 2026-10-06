@@ -8217,41 +8217,21 @@ h3 {
 
 .patt-bg {
   position: relative;
-  background-color: #fafbfc;
-  background: radial-gradient(circle at 12% 20%, rgba(218, 37, 28, 0.035) 0%, transparent 45%),
-              radial-gradient(circle at 88% 80%, rgba(245, 158, 11, 0.025) 0%, transparent 40%),
-              linear-gradient(180deg, #ffffff 0%, #fafbfc 50%, #ffffff 100%);
+  background-color: #f7f9fc;
+  background: radial-gradient(circle at 12% 18%, rgba(230, 4, 2, 0.025) 0%, transparent 45%),
+              radial-gradient(circle at 88% 82%, rgba(197, 157, 95, 0.035) 0%, transparent 45%),
+              linear-gradient(180deg, #fbfcfe 0%, #f1f4f9 50%, #fbfcfe 100%);
   overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.patt-bg::after {
-  position: absolute;
-  top: 0px;
-  content: "";
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background-image: url("../img/modern-food-pattern.svg");
-  background-size: 150px 150px;
-  background-position: center center;
-  background-repeat: repeat;
-  opacity: 0.20;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Option 2: Modern Exhibition Tech / Micro-Grid */
-.patt-bg.patt-grid::after {
-  background-image: url("../img/modern-expo-grid.svg");
-  background-size: 45px 45px;
-  opacity: 0.25;
-}
-
-/* Option 3: Modern Abstract Culinary Geometry */
+.patt-bg::after,
+.patt-bg.patt-grid::after,
 .patt-bg.patt-abstract::after {
-  background-image: url("../img/modern-culinary-abstract.svg");
-  background-size: 90px 90px;
-  opacity: 0.20;
+  display: none !important;
+  content: none !important;
+  background-image: none !important;
 }
 
 .patt-bg > * {

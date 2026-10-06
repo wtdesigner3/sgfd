@@ -7,6 +7,12 @@
   padding: 85px 0 95px;
   position: relative;
   overflow: hidden;
+  background-color: #f7f9fc;
+  background: radial-gradient(circle at 12% 18%, rgba(230, 4, 2, 0.025) 0%, transparent 45%),
+              radial-gradient(circle at 88% 82%, rgba(197, 157, 95, 0.035) 0%, transparent 45%),
+              linear-gradient(180deg, #fbfcfe 0%, #f1f4f9 50%, #fbfcfe 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .home-testimonial-sec::before {
@@ -15,8 +21,14 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(197, 157, 95, 0.3), transparent);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(230, 4, 2, 0.35), rgba(197, 157, 95, 0.4), transparent);
+}
+
+.home-testimonial-sec::after {
+  display: none !important;
+  content: none !important;
+  background-image: none !important;
 }
 
 /* Header & Intro */
