@@ -69,11 +69,23 @@ def main():
                     print(f"     [{pct:5.1f}%] {current_mb:6.1f} / {size_mb:6.1f} MB  ({speed_mbps:.2f} MB/s)")
                     last_reported_mb = current_mb
 
-            # Always fresh upload with STOR
-            with open(filename, 'rb') as f:
-                ftp.storbinary(f'STOR {filename}', f, blocksize=1024 * 1024, callback=progress_callback)
-
-            print(f"---> Successfully uploaded '{filename}' in {time.time() - start_time:.1f}s!")
+            # Upload with up to 3 attempts for network resilience
+            max_attempts = 3
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    uploaded_bytes = 0
+                    last_reported_mb = 0
+                    start_time = time.time()
+                    with open(filename, 'rb') as f:
+                        ftp.storbinary(f'STOR {filename}', f, blocksize=1024 * 1024, callback=progress_callback)
+                    print(f"---> Successfully uploaded '{filename}' in {time.time() - start_time:.1f}s!")
+                    break
+                except (error_temp, TimeoutError) as err:
+                    if attempt < max_attempts:
+                        print(f"Warning: Upload attempt {attempt} failed ({err}). Retrying in 5 seconds...")
+                        time.sleep(5)
+                    else:
+                        raise
 
         ftp.quit()
         print("\nAll files uploaded successfully via FTP!")
