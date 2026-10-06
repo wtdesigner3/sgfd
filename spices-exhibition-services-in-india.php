@@ -737,10 +737,10 @@
                                     <hr class="my-2 mt-4">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-md-3 col-3">
-                                            <img src="assets/img/logo.png" class="img-fluid" alt="">
+                                            <img src="assets/img/logo.png" class="img-fluid" alt="SG Foodees Infotech LLP">
                                         </div>
-                                        <div class="col-md-3 col-3">
-                                            <img src="assets/img/food.png" class="img-fluid" alt="">
+                                        <div class="col-md-3 col-3 text-end">
+                                            <img src="assets/img/food.png" class="img-fluid" alt="5th Global Food & Bakery Expo">
                                         </div>
                                     </div>
                                 </form>
