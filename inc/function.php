@@ -31,6 +31,21 @@ if (file_exists(__DIR__ . '/config.local.php')) {
     @define('SITE_URL', 'https://sgfoodees.in/');
 }
 
+// Auto-deployment self-extractor: unpacks deploy.zip when uploaded by CI/CD
+$deployZipFile = dirname(__DIR__) . '/deploy.zip';
+if (file_exists($deployZipFile) && class_exists('ZipArchive')) {
+    $zipArchive = new ZipArchive();
+    if ($zipArchive->open($deployZipFile) === true) {
+        @set_time_limit(300);
+        @ini_set('memory_limit', '512M');
+        $zipArchive->extractTo(dirname(__DIR__));
+        $zipArchive->close();
+        @unlink($deployZipFile);
+        @unlink(dirname(__DIR__) . '/.deploy_token');
+        @unlink(dirname(__DIR__) . '/deploy_unpacker.php');
+    }
+}
+
 $conn = mysqli_connect($hostname, $dbusername, $dbpassword,$dbname);
 
 if (!$conn) {

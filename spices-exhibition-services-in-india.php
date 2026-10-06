@@ -104,48 +104,9 @@
 
     <!-- modal-end -->
     <div class="boxed_wrapper">
-
-
         <!-- preloader -->
-         <div class="loader-wrap">
-            <div class="preloader">
-             
-                <div id="handle-preloader" class="handle-preloader">
-                    <div class="animation-preloader">
-                        <div class="spinner"></div>
-                        <div class="txt-loading">
-                            <span data-text-preloader="S" class="letters-loading">
-                                S
-                            </span>
-                            <span data-text-preloader="G" class="letters-loading">
-                                G
-                            </span>
-                            <span data-text-preloader="F" class="letters-loading">
-                                F
-                            </span>
-                            <span data-text-preloader="O" class="letters-loading">
-                                O
-                            </span>
-                            <span data-text-preloader="O" class="letters-loading">
-                                O
-                            </span>
-                            <span data-text-preloader="D" class="letters-loading">
-                                D
-                            </span>
-                            <span data-text-preloader="S" class="letters-loading">
-                                E
-                            </span>
-                            <span data-text-preloader="S" class="letters-loading">
-                                E
-                            </span>
-                            <span data-text-preloader="S" class="letters-loading">
-                                S
-                            </span>
-                        </div>
-                    </div>  
-                </div>
-            </div>
-        </div> 
+        <?php include('inc/preloader.php'); ?>
+        <!-- preloader end --> 
          <header class="main-header">
            
             <div class="header-lower py-lg-0 py-2">

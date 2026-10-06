@@ -92,6 +92,7 @@ src="https://www.facebook.com/tr?id=4550862318526942&ev=PageView&noscript=1"
     <link href="<?=SITE_URL?>assets/css/elpath.css" rel="stylesheet">
     <link href="<?=SITE_URL?>assets/css/style.css?v=<?= time() ?>" rel="stylesheet">
     <link href="<?=SITE_URL?>assets/css/responsive.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="<?=SITE_URL?>assets/css/modern-preloader.css?v=<?= time() ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"  />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />

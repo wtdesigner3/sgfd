@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <!-- Outer Subtle Stroke -->
+  <circle cx="250" cy="250" r="236" fill="none" stroke="#cfd4dc" stroke-width="4"/>
+
+  <!-- Main Coral Red Circle -->
+  <circle cx="250" cy="250" r="222" fill="#ef4141"/>
+
+  <!-- Serif SG Monogram Background Letterforms -->
+  <!-- Letter S -->
+  <path d="M 225 155 C 215 130 190 120 160 120 C 115 120 85 150 85 190 C 85 240 135 255 175 270 C 220 285 245 310 245 350 C 245 405 200 440 145 440 C 95 440 60 410 50 365 L 82 355 C 90 388 112 410 145 410 C 180 410 210 385 210 350 C 210 310 170 292 128 275 C 88 260 52 235 52 190 C 52 138 95 90 160 90 C 205 90 235 115 248 150 Z" fill="#ffffff" opacity="0.96"/>
+
+  <!-- Letter G -->
+  <path d="M 430 200 C 420 150 380 95 310 95 C 220 95 160 165 160 265 C 160 365 225 435 320 435 C 385 435 425 390 438 345 L 405 335 C 395 368 365 405 320 405 C 245 405 198 345 198 265 C 198 185 245 125 310 125 C 360 125 395 165 402 205 Z" fill="#ffffff" opacity="0.96"/>
+
+  <!-- Horizontal White Banner -->
+  <rect x="15" y="222" width="470" height="56" rx="4" fill="#ffffff" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.08))"/>
+
+  <!-- Top and Bottom Thin Framing Lines on Banner -->
+  <line x1="20" y1="223" x2="480" y2="223" stroke="#254b77" stroke-width="2"/>
+  <line x1="20" y1="277" x2="480" y2="277" stroke="#254b77" stroke-width="2"/>
+
+  <!-- Crisp Vector Brand Typography -->
+  <text x="250" y="259" font-family="'Montserrat', 'Arial Black', -apple-system, sans-serif" font-size="24" font-weight="900" letter-spacing="4" fill="#254b77" text-anchor="middle">
+    SGFOODEES-INFOTECH LLP
+  </text>
+</svg>

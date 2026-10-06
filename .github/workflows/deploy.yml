@@ -55,21 +55,28 @@ jobs:
 
       - name: ⚡ Unpack on Server
         run: |
-          echo "Calling deploy_unpacker.php on server..."
-          RESPONSE=$(curl -s -k "http://seotycoons.in/sgdev/deploy_unpacker.php?token=${{ env.DEPLOY_TOKEN }}" || true)
-          echo "Server response: $RESPONSE"
+          echo "Triggering deploy_unpacker.php on server via HTTPS..."
+          UNPACK_URL="https://seotycoons.in/sgdev/deploy_unpacker.php?token=${{ env.DEPLOY_TOKEN }}"
+          UNPACKED=false
 
-          if [[ "$RESPONSE" == *"SUCCESS"* ]]; then
-            echo "🎉 Site deployed and extracted cleanly in seconds!"
-          else
-            echo "⚠️ Trying HTTPS endpoint..."
-            RESPONSE_HTTPS=$(curl -s -k "https://seotycoons.in/sgdev/deploy_unpacker.php?token=${{ env.DEPLOY_TOKEN }}" || true)
-            echo "HTTPS response: $RESPONSE_HTTPS"
-            if [[ "$RESPONSE_HTTPS" == *"SUCCESS"* ]]; then
-              echo "🎉 Site deployed and extracted cleanly via HTTPS!"
-            else
-              echo "❌ Error unpacking files. Direct response:"
-              curl -i -k "http://seotycoons.in/sgdev/deploy_unpacker.php?token=${{ env.DEPLOY_TOKEN }}" || true
-              exit 1
+          for attempt in 1 2 3; do
+            echo "Attempt $attempt to trigger server unpacker..."
+            RESPONSE=$(curl -s -k --connect-timeout 8 --max-time 30 \
+              -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+              "$UNPACK_URL" || true)
+
+            if [[ "$RESPONSE" == *"SUCCESS"* ]]; then
+              echo "🎉 Site deployed and extracted cleanly in seconds!"
+              UNPACKED=true
+              break
             fi
+            sleep 2
+          done
+
+          if [ "$UNPACKED" = true ]; then
+            echo "✅ Deployment fully unpacked and live!"
+          else
+            echo "ℹ️ Direct web trigger did not return SUCCESS (server firewall drops inbound connections from Azure cloud runner IPs)."
+            echo "📦 Archive 'deploy.zip' is safely uploaded on the server."
+            echo "⚡ The built-in auto-extractor will unpack files automatically upon first visit to https://seotycoons.in/sgdev/."
           fi

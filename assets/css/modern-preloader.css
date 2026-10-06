@@ -1,0 +1,120 @@
+/* ==========================================================================
+   SG FOODEES - Clean & Crisp Vector Preloader
+   Pure mathematical vector logo - 100% sharp, zero blur, zero pixelation
+   ========================================================================== */
+
+.handle-preloader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999999;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.minimal-preloader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Balanced Concentric Ring System */
+.loader-icon-wrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Smooth Rotating Accent Ring */
+.loader-spinner-ring {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(230, 4, 2, 0.08);
+  border-top-color: #e60402;
+  border-right-color: #023984;
+  animation: spinRing 1s linear infinite;
+}
+
+/* Razor-Sharp 100% Vector Logo */
+.loader-logo {
+  width: 114px;
+  height: 114px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(230, 4, 2, 0.12));
+}
+
+/* Clean Typography */
+.loader-text {
+  margin-top: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+/* Minimalist Accent Indicator Line */
+.loader-line {
+  width: 36px;
+  height: 2.5px;
+  background: linear-gradient(90deg, #e60402, #023984);
+  border-radius: 3px;
+  margin-top: 10px;
+  animation: expandLine 1.4s ease-in-out infinite alternate;
+}
+
+/* Keyframe Animations */
+@keyframes spinRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes expandLine {
+  0% {
+    width: 18px;
+    opacity: 0.4;
+  }
+  100% {
+    width: 44px;
+    opacity: 1;
+  }
+}
+
+/* Responsive Scaling */
+@media screen and (max-width: 576px) {
+  .loader-icon-wrap {
+    width: 130px;
+    height: 130px;
+  }
+  .loader-spinner-ring {
+    width: 130px;
+    height: 130px;
+  }
+  .loader-logo {
+    width: 90px;
+    height: 90px;
+  }
+  .loader-text {
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-top: 16px;
+  }
+}
