@@ -19,7 +19,7 @@ jobs:
 
       - name: 📦 Package Site into deploy.zip
         run: |
-          echo "Packaging site files..."
+          echo "Packaging site files into deploy.zip..."
           zip -r -q deploy.zip . \
             -x ".git/*" \
             -x ".git*" \
@@ -44,9 +44,6 @@ jobs:
           cp .github/deploy_unpacker.php ./deploy_unpacker.php
           echo "Token and unpacker ready."
 
-      - name: 🛠️ Install LFTP
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-
       - name: 🚀 Upload Archive & Unpacker via FTP
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
@@ -54,31 +51,7 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
         run: |
-          set -f
-          TARGET_DIR="${FTP_SERVER_DIR:-.}"
-          echo "Deploying to FTP Server: $FTP_SERVER"
-          echo "Target directory setting: $TARGET_DIR"
-
-          CD_CMD=""
-          if [ -n "$TARGET_DIR" ] && [ "$TARGET_DIR" != "/" ] && [ "$TARGET_DIR" != "." ]; then
-            CD_CMD="cd \"$TARGET_DIR\" || true;"
-          fi
-
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" -e "
-            set cmd:fail-exit yes;
-            set ftp:ssl-allow no;
-            set ftp:passive-mode true;
-            set net:timeout 180;
-            set net:max-retries 5;
-            set net:reconnect-interval-base 5;
-            $CD_CMD
-            pwd;
-            put -c deploy.zip;
-            put -c deploy_unpacker.php;
-            put -c .deploy_token;
-            bye;
-          "
-          echo "Upload complete!"
+          python .github/ftp_upload.py
 
       - name: ⚡ Unpack on Server
         run: |
