@@ -144,6 +144,7 @@ $magazine = mysqli_fetch_assoc(mysqli_query($conn,"SELECT magazine FROM `tbl_mag
                                         </li>
 
                                         <li class="<?php if($url == 'resources'){ echo 'current';}else{ echo '';} ?>"><a href="<?= SITE_URL ?>resources">Gallery</a></li>
+                                        <li class="<?php if($url == 'testimonial'){ echo 'current';}else{ echo '';} ?>"><a href="<?= SITE_URL ?>testimonial">Testimonials</a></li>
                                         <li class="<?php if($url == 'contact'){ echo 'current';}else{ echo '';} ?>"><a href="<?= SITE_URL ?>contact">Contact Us</a></li>
                                         <!--<li class="<?php if($url == '#'){ echo 'current';}else{ echo '';} ?>"><a href="#">Magazine</a></li>-->
                                     </ul>
