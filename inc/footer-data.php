@@ -171,3 +171,25 @@ function loadLazyVideo(video) {
     }
 })();
 </script>
+
+<script>
+// Prevent stuck modal backdrops and ensure body scroll restores upon closing any modal
+$(document).ready(function() {
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open').css({'overflow': '', 'padding-right': ''});
+    });
+    $(document).on('click', '.close-btn, [data-bs-dismiss="modal"], [data-dismiss="modal"]', function() {
+        var modal = $(this).closest('.modal');
+        if (modal.length) {
+            modal.modal('hide');
+        } else {
+            $('.modal').modal('hide');
+        }
+        setTimeout(function() {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open').css({'overflow': '', 'padding-right': ''});
+        }, 150);
+    });
+});
+</script>

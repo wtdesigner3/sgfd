@@ -272,7 +272,7 @@
 
                 </div>
 
-                <i data-bs-dismiss="modal" class="fa-regular fa-circle-xmark close-btn"></i>
+                <i data-bs-dismiss="modal" data-dismiss="modal" class="fa-regular fa-circle-xmark close-btn"></i>
 
 
 
@@ -417,7 +417,7 @@
 
                 </div>
 
-                <i data-bs-dismiss="modal" class="fa-regular fa-circle-xmark close-btn text-light " style="z-index: 1;"></i>
+                <i data-bs-dismiss="modal" data-dismiss="modal" class="fa-regular fa-circle-xmark close-btn text-light " style="z-index: 1;"></i>
 
 
 

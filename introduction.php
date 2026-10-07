@@ -186,54 +186,191 @@ $contact_con = mysqli_fetch_assoc($contact);
 
 
             <?php
-
-                    $dinner = mysqli_query($conn, "SELECT * FROM  tbl_dinner where id = '1'");
-                    $dinner_cont = mysqli_fetch_assoc($dinner);
-                    if(!empty($dinner_cont)){
-
+                $dinner = mysqli_query($conn, "SELECT * FROM tbl_dinner where id = '1'");
+                $dinner_cont = mysqli_fetch_assoc($dinner);
+                if(!empty($dinner_cont)){
             ?>
-        <section class="about-style-two sec-pad buyer-bg" id="buyer">
+        <section class="about-style-two sec-pad expo-feature-section" id="buyer">
             <div class="auto-container">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="position-relative">
-                            <div class="buyer-content">
-                                <div class="buyer-contner-img">
-                                    <img src="assets/img/l-border.png" class="img-fluid" alt="<?= $dinner_cont['alt'] ?>">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="expo-feature-stage" data-aos="fade-up" data-aos-duration="700">
+                            <!-- Top Editorial Header Strip -->
+                            <div class="expo-stage-topbar">
+                                <div class="expo-stage-brand">
+                                    <img src="assets/img/food.png" alt="5th Global Food & Bakery Expo" class="expo-brand-symbol">
+                                    <div class="expo-brand-meta">
+                                        <span class="expo-brand-tag">5th Grand International Edition</span>
+                                        <span class="expo-brand-sub">Premier B2B Conclave & Trade Fair</span>
+                                    </div>
                                 </div>
-                                <h1><?= $dinner_cont['heading'] ?></h1>
-                                <P><?= $dinner_cont['title'] ?></P>
-                                <h2><?= $dinner_cont['subtitle'] ?></h2>
+                                <div class="expo-stage-organizer">
+                                    <span class="org-label">Organized By</span>
+                                    <span class="org-name">SG Foodees Infotech LLP</span>
+                                </div>
                             </div>
-                            <img src="uploads/dinner/<?= $dinner_cont['image'] ?>" class="img-fluid" alt="">
+
+                            <!-- Main Showcase Body (2-Column Asymmetric Grid) -->
+                            <div class="expo-stage-body">
+                                <div class="row align-items-stretch g-4">
+                                    <!-- Left Column: Title, Narrative, Venue & Action -->
+                                    <div class="col-lg-7 d-flex flex-column justify-content-between">
+                                        <div class="expo-primary-content">
+                                            <div class="expo-heading-label">
+                                                <span class="red-dash"></span>
+                                                <span class="label-text">Official Event Announcement</span>
+                                            </div>
+
+                                            <h1 class="expo-main-title"><?= htmlspecialchars($dinner_cont['heading']) ?></h1>
+
+                                            <p class="expo-lead-text">
+                                                India's foremost business platform uniting global leaders, manufacturers, and buyers across Food Processing, Bakery Machinery, Ingredients, Packaging, and Allied Technologies.
+                                            </p>
+
+                                            <!-- Official Venue Panel -->
+                                            <div class="expo-venue-panel">
+                                                <div class="venue-icon-wrapper">
+                                                    <i class="fa-solid fa-location-dot"></i>
+                                                </div>
+                                                <div class="venue-info-text">
+                                                    <span class="venue-caption">Exhibition Venue</span>
+                                                    <h3 class="venue-title"><?= htmlspecialchars($dinner_cont['subtitle']) ?></h3>
+                                                    <span class="venue-sub">Delhi-NCR, India • World-Class Air-Conditioned Exhibition Halls</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Action Buttons Group -->
+                                        <div class="expo-actions-group">
+                                            <a href="javascript:void(0)" class="theme-btn-one expo-primary-btn" data-bs-toggle="modal" data-bs-target="#myModal">
+                                                <i class="fa-solid fa-id-badge mr-2"></i> Get Visitor Pass
+                                            </a>
+                                            <a href="exhibit.php" class="expo-secondary-btn">
+                                                <span>Book Exhibition Stall</span>
+                                                <i class="fa-solid fa-arrow-right ml-2"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Column: Official Calendar & Delegate Pass Component -->
+                                    <div class="col-lg-5">
+                                        <div class="expo-date-ticket">
+                                            <!-- Ticket Ribbon -->
+                                            <div class="ticket-header-ribbon">
+                                                <i class="fa-solid fa-calendar-check mr-2"></i>
+                                                <span>Official Exhibition Dates</span>
+                                            </div>
+
+                                            <!-- Ticket Body -->
+                                            <div class="ticket-body-content">
+                                                <div class="ticket-edition-stamp">JULY 2027</div>
+
+                                                <div class="ticket-days-display">
+                                                    <div class="day-slot">
+                                                        <span class="slot-number">15</span>
+                                                        <span class="slot-day">THU</span>
+                                                    </div>
+                                                    <div class="slot-divider">•</div>
+                                                    <div class="day-slot slot-center">
+                                                        <span class="slot-number">16</span>
+                                                        <span class="slot-day">FRI</span>
+                                                    </div>
+                                                    <div class="slot-divider">•</div>
+                                                    <div class="day-slot">
+                                                        <span class="slot-number">17</span>
+                                                        <span class="slot-day">SAT</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ticket-full-date-badge">
+                                                    <i class="fa-regular fa-calendar-days mr-2 text-danger"></i> <?= htmlspecialchars($dinner_cont['title']) ?>
+                                                </div>
+
+                                                <div class="ticket-divider-stitch"></div>
+
+                                                <!-- Expo Quick Facts -->
+                                                <div class="ticket-info-rows">
+                                                    <div class="t-row">
+                                                        <span class="t-label"><i class="fa-regular fa-clock mr-2 text-danger"></i> Expo Timings:</span>
+                                                        <span class="t-val">10:00 AM – 06:00 PM (Daily)</span>
+                                                    </div>
+                                                    <div class="t-row">
+                                                        <span class="t-label"><i class="fa-solid fa-building mr-2 text-danger"></i> Complex:</span>
+                                                        <span class="t-val">India Expo Centre & Mart</span>
+                                                    </div>
+                                                    <div class="t-row">
+                                                        <span class="t-label"><i class="fa-solid fa-users mr-2 text-danger"></i> Target Audience:</span>
+                                                        <span class="t-val">B2B Trade & Industrial Buyers</span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Ticket Footer -->
+                                                <div class="ticket-badge-footer">
+                                                    <i class="fa-solid fa-shield-halved text-danger mr-2"></i> Official Trade Exhibition • SG Foodees
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Categories Strip -->
+                            <div class="expo-stage-footer-strip">
+                                <div class="strip-item"><i class="fa-solid fa-bread-slice mr-2"></i> Bakery & Confectionery Machinery</div>
+                                <div class="strip-sep">/</div>
+                                <div class="strip-item"><i class="fa-solid fa-wheat-awn mr-2"></i> Food Processing Technology</div>
+                                <div class="strip-sep">/</div>
+                                <div class="strip-item"><i class="fa-solid fa-box-open mr-2"></i> Packaging & Cold Chain</div>
+                                <div class="strip-sep">/</div>
+                                <div class="strip-item"><i class="fa-solid fa-handshake mr-2"></i> B2B Buyer-Seller Conclave</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Buyer Seller Meet Section (Aligned with Site's s-style) -->
             <?php
-                    $meet = mysqli_query($conn, "SELECT * FROM  tbl_overview where id = '2'");
-                    $meet_cont = mysqli_fetch_assoc($meet);
+                $meet = mysqli_query($conn, "SELECT * FROM tbl_overview where id = '2'");
+                $meet_cont = mysqli_fetch_assoc($meet);
+                if(!empty($meet_cont)){
             ?>
-            <div class="auto-container mt-5">
-                <div class="s-style mb-3 mb-lg-5">
-                    <h1 class=""><?= $meet_cont['heading'] ?>
-                    </h1>
+            <div class="auto-container mt-5 pt-4">
+                <div class="s-style mb-4 text-center">
+                    <h1><?= htmlspecialchars($meet_cont['heading']) ?></h1>
                 </div>
-                <div class="text-inner p_relative d_block">
-                    <div class="row clearfix justify-content-center">
-                        <div class="col-lg-12 col-md-12 col-sm-12 text-column">
-                            <div class="text mr_30 text-center">
-                                <p class=""><?= $meet_cont['description'] ?></p>
+                <div class="row justify-content-center">
+                    <div class="col-lg-11">
+                        <div class="buyer-meet-clean-card text-center" data-aos="fade-up" data-aos-duration="700">
+                            <p class="meet-clean-desc"><?= htmlspecialchars($meet_cont['description']) ?></p>
+                            <div class="row g-3 justify-content-center mt-3">
+                                <div class="col-md-4">
+                                    <div class="b2b-highlight-tile">
+                                        <div class="b2b-tile-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                                        <h5>Pre-Scheduled Meetings</h5>
+                                        <p>One-on-one structured sessions with pre-qualified industrial buyers.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="b2b-highlight-tile">
+                                        <div class="b2b-tile-icon"><i class="fa-solid fa-industry"></i></div>
+                                        <h5>Direct Manufacturer Connect</h5>
+                                        <p>Eliminate intermediaries to negotiate partnerships directly.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="b2b-highlight-tile">
+                                        <div class="b2b-tile-icon"><i class="fa-solid fa-globe"></i></div>
+                                        <h5>Pan-India & Global Buyers</h5>
+                                        <p>Connect with high-value procurement heads and distributors.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </section>
                 <?php } ?>
                 
