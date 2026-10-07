@@ -200,7 +200,7 @@ $contact_con = mysqli_fetch_assoc($contact);
                                 <div class="expo-stage-brand">
                                     <img src="assets/img/food.png" alt="5th Global Food & Bakery Expo" class="expo-brand-symbol">
                                     <div class="expo-brand-meta">
-                                        <span class="expo-brand-tag">5th Grand International Edition</span>
+                                        <span class="expo-brand-tag">5th Grand Global food & Bakery Expo</span>
                                         <span class="expo-brand-sub">Premier B2B Conclave & Trade Fair</span>
                                     </div>
                                 </div>
@@ -268,17 +268,17 @@ $contact_con = mysqli_fetch_assoc($contact);
                                                 <div class="ticket-days-display">
                                                     <div class="day-slot">
                                                         <span class="slot-number">15</span>
-                                                        <span class="slot-day">THU</span>
+                                                        <!-- <span class="slot-day">THU</span> -->
                                                     </div>
                                                     <div class="slot-divider">•</div>
                                                     <div class="day-slot slot-center">
                                                         <span class="slot-number">16</span>
-                                                        <span class="slot-day">FRI</span>
+                                                        <!-- <span class="slot-day">FRI</span> -->
                                                     </div>
                                                     <div class="slot-divider">•</div>
                                                     <div class="day-slot">
                                                         <span class="slot-number">17</span>
-                                                        <span class="slot-day">SAT</span>
+                                                        <!-- <span class="slot-day">SAT</span> -->
                                                     </div>
                                                 </div>
 
@@ -298,10 +298,10 @@ $contact_con = mysqli_fetch_assoc($contact);
                                                         <span class="t-label"><i class="fa-solid fa-building mr-2 text-danger"></i> Complex:</span>
                                                         <span class="t-val">India Expo Centre & Mart</span>
                                                     </div>
-                                                    <div class="t-row">
+                                                    <!-- <div class="t-row">
                                                         <span class="t-label"><i class="fa-solid fa-users mr-2 text-danger"></i> Target Audience:</span>
                                                         <span class="t-val">B2B Trade & Industrial Buyers</span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
 
                                                 <!-- Ticket Footer -->
