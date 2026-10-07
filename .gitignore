@@ -12,7 +12,8 @@ Thumbs.db
 
 # Temporary / Scratch directories
 scratch/
-testpng/
+testpng/passtest/output/*
+testpng/passtest/qrcodes/*
 uploads12/
 uploads/bakupimage/
 mail/uploads/badges/

@@ -1,0 +1,106 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #111827;
+  background: radial-gradient(circle at 50% 20%, #1f2937 0%, #0f172a 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 30px 15px;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pass-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.pass-wrapper {
+  width: 1000px;
+  max-width: 95vw;
+  height: auto;
+  aspect-ratio: 2000 / 1353;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* background image */
+.bg-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pass-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* subtle overlay over preview image */
+.bg-overlay::after {
+  content: "";
+  background: rgba(15, 23, 42, 0.22);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* centered download button */
+.download-btn-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.btn-download-pass {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #e51d24 0%, #b8141a 100%);
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 50px;
+  box-shadow: 0 10px 25px rgba(229, 29, 36, 0.5), 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-download-pass:hover {
+  transform: scale(1.06);
+  box-shadow: 0 15px 35px rgba(229, 29, 36, 0.65), 0 6px 14px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #ff2a32 0%, #c9171e 100%);
+}
+
+.btn-download-pass svg {
+  width: 22px;
+  height: 22px;
+  stroke: #ffffff;
+}
+
+/* legacy hidden elements */
+.white-box {
+  display: none !important;
+}
