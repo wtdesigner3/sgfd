@@ -174,8 +174,7 @@
                             <!-- <hr> -->
                             <div>
 
-                                <!--<form class="position-relative" style="z-index:11" method="POST" action="<?=SITE_URL?>registerMail.php">-->
-                                <form target="_blank" class="position-relative" style="z-index:11" method="POST" action="<?=SITE_URL?>testpng/passtest/submit">
+                                <form target="_blank" class="position-relative" style="z-index:11" method="POST" action="<?=SITE_URL?>testpng/passtest/submit.php">
                                     <div class="row justify-content-center align-items-center">
 
                                         <div class="col-lg-5">

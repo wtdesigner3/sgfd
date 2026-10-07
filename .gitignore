@@ -14,6 +14,9 @@ Thumbs.db
 scratch/
 testpng/passtest/output/*
 testpng/passtest/qrcodes/*
+testpng/passtest/output-back/*
+testpng/passtest/qrcodes-back/*
+testpng/phpqrcode/cache/*
 uploads12/
 uploads/bakupimage/
 mail/uploads/badges/

@@ -25,7 +25,11 @@ jobs:
             -x ".git*" \
             -x ".github/*" \
             -x "scratch/*" \
-            -x "testpng/*" \
+            -x "testpng/passtest/output/*" \
+            -x "testpng/passtest/qrcodes/*" \
+            -x "testpng/passtest/output-back/*" \
+            -x "testpng/passtest/qrcodes-back/*" \
+            -x "testpng/phpqrcode/cache/*" \
             -x "uploads12/*" \
             -x "uploads/bakupimage/*" \
             -x "mail/uploads/badges/*" \
