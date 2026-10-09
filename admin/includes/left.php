@@ -297,6 +297,15 @@ $rowww = $resulltt->fetch_assoc();
 					<!--	</a>-->
 					<!--</li>-->
 					
+                    <li class="has-sub <?php if(in_array($first_part, ['manage-page-headers.php', 'edit-page-header.php', 'add-page-header.php'])) { echo 'active'; } ?>">
+						<a href="manage-page-headers.php">
+							<b class="caret"></b>
+							<i class="fa fa-header"></i>
+							<span>Page Headers</span>
+						</a>
+					</li>
+
+                    <!-- Obsolete legacy module replaced by Page Headers:
                     <li class="has-sub <?php if($first_part=="manage-breadcrumb.php" || $first_part=="edit-breadcrumb.php" ) { echo "active"; } ?>">
 						<a href="manage-breadcrumb.php">
 							<b class="caret"></b>
@@ -304,6 +313,7 @@ $rowww = $resulltt->fetch_assoc();
 							<span>Breadcrumb Manag..</span>
 						</a>
 					</li>
+                    -->
 					
 					<!-- begin sidebar minify button -->
 					<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>

@@ -7,8 +7,8 @@
                     <div class="loader-spinner-ring"></div>
                     <img src="<?= SITE_URL ?>assets/img/logo.png" alt="SG FOODEES" class="loader-logo">
                 </div>
-                <div class="loader-text">SG FOODEES</div>
-                <div class="loader-line"></div>
+                <!-- <div class="loader-text">SG FOODEES</div>
+                <div class="loader-line"></div> -->
             </div>
         </div>
     </div>

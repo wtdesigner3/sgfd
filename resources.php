@@ -1,8 +1,9 @@
 <?php
 require('inc/function.php');
+require_once('inc/page-header-db.php');
 
-        $breadCrumb = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `tbl_breadcrumb` where brd_id = '1'"));
-        
+$pageHeader = get_page_header_record($conn, 'resources');
+$pageTitle = !empty($pageHeader['page_name']) ? $pageHeader['page_name'] : 'Resources';
 ?>
 
 <!doctype html>
@@ -12,9 +13,9 @@ require('inc/function.php');
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-     <title><?= $breadCrumb['brd_name']; ?> | <?= SITE_NAME ?></title>
-    <meta name="description" content="<?= $breadCrumb['metakeyword']; ?>">
-    <meta name="keywords" content="<?= $breadCrumb['metadesc']; ?>">
+    <title><?= htmlspecialchars($pageTitle); ?> | <?= SITE_NAME ?></title>
+    <meta name="description" content="Official Expo Manual, technical stall guidelines, and exhibition toolkit for 5th Global Food & Bakery Expo 2027.">
+    <meta name="keywords" content="exhibitor manual, stall layout guidelines, food expo resources, bakery expo toolkit">
     <?php include('inc/head.php'); ?>
 <!-- page wrapper -->
 </head>
