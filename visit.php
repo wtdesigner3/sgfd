@@ -34,22 +34,7 @@ require('inc/function.php');
         <!-- preloader end -->
          <?php include('inc/header.php'); ?>
         <!-- Page Title -->
-        <?php
-        if(!empty($banner_cont['bnr_image'])){
-        ?>
-        <section class="page-title centred">
-            <div class="bg-layer"
-                style="background-image: url(uploads/banner/<?= $banner_cont['bnr_image'] ?>); background-size: cover; background-position: bottom;">
-            </div>
-            <div class="auto-container">
-                <div class="content-box">
-                    
-                   <div class="fg-logo"> <h2 class="mb-3">Visitor Profile</h2> <img src="uploads/banner/<?= $banner_cont['bnr_logo'] ?>" class="img-fluid" alt=""></div>
-
-                </div>
-            </div>
-        </section>
-        <?php } ?>
+        <?php include('inc/page-header.php'); ?>
         <!-- End Page Title -->
 
 <?php

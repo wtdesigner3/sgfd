@@ -79,25 +79,10 @@ $contact_con = mysqli_fetch_assoc($contact);
        
         <!-- Page Title -->
         <?php
-        
         $intro_banner = mysqli_query($conn, "SELECT * FROM tbl_banner where bnr_id = '8'");
         $banner_cont = mysqli_fetch_assoc($intro_banner);
-         if(!empty($banner_cont)){
+        include('inc/page-header.php');
         ?>
-        <section class="page-title centred">
-            <div class="bg-layer"
-                style="background-image: url(uploads/banner/<?= $banner_cont['bnr_image'] ?>); background-size: cover; background-position: bottom;">
-            </div>
-            <div class="auto-container">
-                <div class="content-box">
-                    
-                   <div class="fg-logo"> <h2 class="mb-3">Introduction</h2> <img src="uploads/banner/<?= $banner_cont['bnr_logo'] ?>" class="img-fluid" alt=""></div>
-
-                </div>
-            </div>
-        </section>
-        <?php
-         } ?>
         <!-- End Page Title -->
 
                 <?php
@@ -200,7 +185,7 @@ $contact_con = mysqli_fetch_assoc($contact);
                                 <div class="expo-stage-brand">
                                     <img src="assets/img/food.png" alt="5th Global Food & Bakery Expo" class="expo-brand-symbol">
                                     <div class="expo-brand-meta">
-                                        <span class="expo-brand-tag">5th Grand Global food & Bakery Expo</span>
+                                        <span class="expo-brand-tag">5th Global food & Bakery Expo</span>
                                         <span class="expo-brand-sub">Premier B2B Conclave & Trade Fair</span>
                                     </div>
                                 </div>
@@ -245,7 +230,7 @@ $contact_con = mysqli_fetch_assoc($contact);
                                             <a href="javascript:void(0)" class="theme-btn-one expo-primary-btn" data-bs-toggle="modal" data-bs-target="#myModal">
                                                 <i class="fa-solid fa-id-badge mr-2"></i> Get Visitor Pass
                                             </a>
-                                            <a href="exhibit.php" class="expo-secondary-btn">
+                                            <a href="javascript:void(0)" class="expo-secondary-btn" data-bs-toggle="modal" data-bs-target="#contactModal" data-toggle="modal" data-target="#contactModal">
                                                 <span>Book Exhibition Stall</span>
                                                 <i class="fa-solid fa-arrow-right ml-2"></i>
                                             </a>

@@ -33,19 +33,7 @@ require('inc/function.php');
         <!-- main-header end -->
 
         <!-- Page Title -->
-        <section class="page-title centred">
-            <div class="bg-layer"
-                style="background-image: url(uploads/breadcrumb/<?= $breadCrumb['brd_image'] ?>); background-size: cover; background-position: bottom;">
-            </div>
-            <!-- <div>
-                <img src="assets/img/page-banner.jpg" class="img-fluid" alt="">
-            </div> -->
-            <div class="auto-container">
-                <div class="content-box">
-                   <div class="fg-logo"> <h2 class="mb-3"><?= $breadCrumb['brd_name'] ?></h2> <img loading="lazy" src="uploads/breadcrumb/<?= $breadCrumb['brd_logo'] ?>" class="img-fluid" alt="<?= $breadCrumb['brd_name'] ?> Logo"></div>
-                </div>
-            </div>
-        </section>
+        <?php include('inc/page-header.php'); ?>
         <!-- End Page Title -->
 
 

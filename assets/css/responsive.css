@@ -491,12 +491,12 @@
   }
 
   .page-title{
-    padding: 80px 0px;
+    padding: 45px 0px 40px;
   }
 
   .page-title .content-box h2{
-    font-size: 50px;
-    line-height: 60px;
+    font-size: 32px;
+    line-height: 1.25;
   }
 
   .service-section.alternat-2{
@@ -753,8 +753,12 @@
   }
 
   .page-title .content-box h2{
-    font-size: 40px;
-    line-height: 50px;
+    font-size: 26px;
+    line-height: 1.25;
+  }
+  .fg-logo img{
+    max-width: 140px;
+    padding: 5px 14px;
   }
 
   .accordion-box .block .acc-btn h5{

@@ -39,18 +39,7 @@ require('inc/function.php');
         <!-- main-header end -->
 
         <!-- Page Title -->
-        <section class="page-title centred">
-            <div class="bg-layer"
-                style="background-image: url(assets/img/introd-bg.jpg); background-size: cover; background-position: bottom;">
-            </div>
-            <div class="auto-container">
-                <div class="content-box">
-                    
-                   <div class="fg-logo"> <h2 class="mb-3">Contact Us</h2> <img src="assets/img/fg-logo.png" class="img-fluid" alt=""></div>
-
-                </div>
-            </div>
-        </section>
+        <?php include('inc/page-header.php'); ?>
         <!-- End Page Title -->
 
         <section class="about-style-two sec-pad  position-relative patt-bg" id="why">

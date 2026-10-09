@@ -47,21 +47,8 @@ $contact_con = mysqli_fetch_assoc($contact);
         <?php 
         $banner = mysqli_query($conn, "SELECT * FROM tbl_banner where bnr_id = '9'");
         $banner_cont = mysqli_fetch_assoc($banner);
-        if(!empty($banner_cont)){
+        include('inc/page-header.php');
         ?>
-        <section class="page-title centred">
-            <div class="bg-layer"
-                style="background-image: url(uploads/banner/<?= $banner_cont['bnr_image'] ?>); background-size: cover; background-position: bottom;">
-            </div>
-            <div class="auto-container">
-                <div class="content-box">
-                    
-                   <div class="fg-logo"> <h2 class="mb-3">Exhibit</h2> <img src="uploads/banner/<?= $banner_cont['bnr_logo'] ?>" class="img-fluid" alt=""></div>
-
-                </div>
-            </div>
-        </section>
-        <?php } ?>
         <!-- End Page Title -->
 
 
